@@ -10,7 +10,6 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
@@ -37,9 +36,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -96,8 +92,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Abir Hossen is a full-stack developer specializing in React, Node.js, Express, and MongoDB — building modern, scalable, performance-driven web applications." },
       { property: "og:description", content: "Abir Hossen is a full-stack developer specializing in React, Node.js, Express, and MongoDB — building modern, scalable, performance-driven web applications." },
       { name: "twitter:description", content: "Abir Hossen is a full-stack developer specializing in React, Node.js, Express, and MongoDB — building modern, scalable, performance-driven web applications." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/cc0ca139-9912-4c9e-8ec2-092d32b537aa/id-preview-1a343514--e64d8aae-3045-4e06-aa04-e011bac69100.lovable.app-1783397088454.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/cc0ca139-9912-4c9e-8ec2-092d32b537aa/id-preview-1a343514--e64d8aae-3045-4e06-aa04-e011bac69100.lovable.app-1783397088454.png" },
+      { property: "og:image", content: "/og-image.png" },
+      { name: "twitter:image", content: "/og-image.png" },
     ],
     links: [
       {

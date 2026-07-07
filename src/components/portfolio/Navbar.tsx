@@ -33,12 +33,11 @@ export function Navbar() {
       }`}
     >
       <nav
-        className={`mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-2xl px-4 transition-all duration-300 sm:px-6 ${
+        className={`mx-4 sm:mx-6 xl:mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-2xl px-4 transition-all duration-300 sm:px-6 ${
           scrolled
             ? "glass py-2.5 shadow-soft"
             : "border border-transparent bg-transparent py-3"
         }`}
-        style={{ marginInline: "1rem" }}
       >
         <button
           onClick={() => scrollTo("home")}

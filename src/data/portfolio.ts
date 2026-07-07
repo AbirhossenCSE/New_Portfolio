@@ -84,6 +84,18 @@ export const skillCategories: SkillCategory[] = [
         level: 92,
       },
       {
+        name: "Next.js",
+        description:
+          "React framework for production grade applications with server-side rendering and static generation.",
+        level: 85,
+      },
+      {
+        name: "TypeScript",
+        description:
+          "Strongly typed superset of JavaScript that scales codebase safety, refactoring, and readability.",
+        level: 88,
+      },
+      {
         name: "JavaScript",
         description:
           "Core programming language for adding interactivity, logic handling, and building scalable full-stack apps.",
@@ -127,12 +139,24 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    category: "Database",
+    category: "Database & ORM",
     skills: [
       {
         name: "MongoDB",
         description: "NoSQL database for storing & managing data with efficient queries.",
         level: 84,
+      },
+      {
+        name: "PostgreSQL",
+        description:
+          "Powerful, open-source object-relational database system focused on SQL compliance and extensibility.",
+        level: 82,
+      },
+      {
+        name: "Prisma ORM",
+        description:
+          "Next-generation Node.js and TypeScript ORM for clean schema modeling and type-safe database queries.",
+        level: 85,
       },
       {
         name: "Database Management",
@@ -155,6 +179,30 @@ export const skillCategories: SkillCategory[] = [
         name: "VS Code",
         description: "My go-to editor with custom extensions & snippets for productivity.",
         level: 92,
+      },
+      {
+        name: "Postman",
+        description:
+          "API platform for building, testing, documenting, and collaborating on RESTful services.",
+        level: 88,
+      },
+      {
+        name: "Figma",
+        description:
+          "Collaborative interface design tool used to inspect wireframes, export assets, and align UI designs.",
+        level: 80,
+      },
+      {
+        name: "Stripe API",
+        description:
+          "Online payment processing suite for integrating secure subscription billing and checkout systems.",
+        level: 82,
+      },
+      {
+        name: "Chart.js",
+        description:
+          "Simple yet flexible JavaScript charting library for rendering interactive data visualizations.",
+        level: 84,
       },
     ],
   },

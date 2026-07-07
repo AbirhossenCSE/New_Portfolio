@@ -15,7 +15,7 @@ import { SectionHeading } from "./SectionHeading";
 const categoryIcons: Record<string, LucideIcon> = {
   Frontend: Layout,
   Backend: Server,
-  Database: Database,
+  "Database & ORM": Database,
   Tools: Wrench,
   Deployment: Cloud,
 };
