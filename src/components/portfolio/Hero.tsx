@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Facebook, Github, Linkedin, Mail, Sparkles } from "lucide-react";
-import { profile } from "@/data/portfolio";
+import { ArrowRight, Download, Facebook, Github, Linkedin, Mail, Sparkles, AlertCircle, RefreshCw } from "lucide-react";
+import { useProfile } from "@/hooks/useProfile";
 import { AnimatedCounter } from "./AnimatedCounter";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 
 function useTypewriter(words: string[]) {
   const [text, setText] = useState("");
@@ -10,6 +12,7 @@ function useTypewriter(words: string[]) {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
+    if (!words || words.length === 0) return;
     const word = words[wordIndex % words.length];
     const done = text === word;
     const empty = text === "";
@@ -41,7 +44,47 @@ const scrollTo = (id: string) =>
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
 export function Hero() {
-  const role = useTypewriter(profile.roles);
+  const { data: profile, isLoading, error, refetch } = useProfile();
+  const role = useTypewriter(profile?.roles || []);
+
+  if (isLoading) {
+    return (
+      <section id="home" className="relative overflow-hidden pb-16 pt-32 sm:pt-36 md:pb-24 md:pt-40">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-6">
+            <Skeleton className="h-8 w-44 rounded-full" />
+            <Skeleton className="h-16 w-3/4 rounded-xl" />
+            <Skeleton className="h-6 w-1/2 rounded-md" />
+            <Skeleton className="h-24 w-full rounded-xl" />
+            <div className="flex gap-4">
+              <Skeleton className="h-12 w-36 rounded-xl" />
+              <Skeleton className="h-12 w-36 rounded-xl" />
+            </div>
+          </div>
+          <div className="relative mx-auto w-full max-w-sm">
+            <Skeleton className="aspect-square w-full rounded-[2rem]" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error || !profile) {
+    return (
+      <section id="home" className="relative overflow-hidden pb-16 pt-32 sm:pt-36 md:pb-24 md:pt-40 flex items-center justify-center">
+        <div className="text-center space-y-4 max-w-md px-4">
+          <div className="mx-auto w-12 h-12 rounded-full bg-destructive/15 flex items-center justify-center text-destructive">
+            <AlertCircle className="h-6 w-6" />
+          </div>
+          <h3 className="text-lg font-bold text-foreground">Failed to load profile</h3>
+          <p className="text-sm text-muted-foreground">The portfolio server might be offline or failed to respond.</p>
+          <Button onClick={() => refetch()} className="cursor-pointer">
+            <RefreshCw className="h-4 w-4 mr-2" /> Retry Connection
+          </Button>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="home" className="relative overflow-hidden pb-16 pt-32 sm:pt-36 md:pb-24 md:pt-40">

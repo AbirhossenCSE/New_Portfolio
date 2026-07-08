@@ -8,6 +8,8 @@ import dns from 'dns';
 import { Project } from '../models/Project';
 import { Skill } from '../models/Skill';
 import { Experience } from '../models/Experience';
+import { Profile } from '../models/Profile';
+import { Education } from '../models/Education';
 
 // Force Node.js to use Google's public DNS servers for resolving MongoDB's SRV records
 dns.setServers(['8.8.8.8', '8.8.4.4']);
@@ -25,10 +27,10 @@ const loadStaticData = () => {
   const tsCode = fs.readFileSync(portfolioPath, 'utf8');
 
   // Replace asset image imports which node.js vm context can't load,
-  // mapping them to mock empty strings instead.
+  // mapping them to mock local asset paths that the Vite dev server can serve.
   const cleanedCode = tsCode
-    .replace(/import\s+abirHome\s+from\s+['"]@\/assets\/abir-home\.png['"];?/g, 'const abirHome = "";')
-    .replace(/import\s+abirAbout\s+from\s+['"]@\/assets\/abir-about\.jpg['"];?/g, 'const abirAbout = "";');
+    .replace(/import\s+abirHome\s+from\s+['"]@\/assets\/abir-home\.png['"];?/g, 'const abirHome = "/src/assets/abir-home.png";')
+    .replace(/import\s+abirAbout\s+from\s+['"]@\/assets\/abir-about\.jpg['"];?/g, 'const abirAbout = "/src/assets/abir-about.jpg";');
 
   // Transpile TypeScript to JavaScript utilizing ts compiler
   const result = ts.transpileModule(cleanedCode, {
@@ -50,6 +52,11 @@ const loadStaticData = () => {
     projects: sandbox.exports.projects || [],
     skillCategories: sandbox.exports.skillCategories || [],
     experience: sandbox.exports.experience || [],
+    profile: sandbox.exports.profile || null,
+    aboutParagraphs: sandbox.exports.aboutParagraphs || [],
+    aboutTags: sandbox.exports.aboutTags || [],
+    quickInfo: sandbox.exports.quickInfo || [],
+    education: sandbox.exports.education || [],
   };
 };
 
@@ -67,11 +74,22 @@ const seed = async () => {
 
     // Load static data from frontend
     console.log('Reading static portfolio data...');
-    const { projects, skillCategories, experience } = loadStaticData();
+    const {
+      projects,
+      skillCategories,
+      experience,
+      profile,
+      aboutParagraphs,
+      aboutTags,
+      quickInfo,
+      education,
+    } = loadStaticData();
 
     let projectsInserted = 0;
     let skillsInserted = 0;
     let experiencesInserted = 0;
+    let profileCreated = false;
+    let educationInserted = 0;
 
     // 1. Seed Projects
     const projectCount = await Project.countDocuments();
@@ -145,10 +163,64 @@ const seed = async () => {
       console.log('Experience seeded successfully.');
     }
 
+    // 4. Seed Profile
+    const profileCount = await Profile.countDocuments();
+    if (profileCount > 0) {
+      console.warn('Profile collection already populated. Skipping profile seeding.');
+    } else if (!profile) {
+      console.log('No static profile data found.');
+    } else {
+      console.log('Seeding profile singleton document...');
+      const profileToInsert = {
+        name: profile.name,
+        fullName: profile.fullName,
+        roles: profile.roles,
+        intro: profile.intro,
+        availability: profile.availability,
+        resumeUrl: profile.resumeUrl,
+        homeImage: profile.homeImage,
+        aboutImage: profile.aboutImage,
+        email: profile.email,
+        phone: profile.phone,
+        phoneIntl: profile.phoneIntl,
+        whatsapp: profile.whatsapp,
+        location: profile.location,
+        socials: profile.socials,
+        aboutParagraphs,
+        aboutTags,
+        quickInfo,
+      };
+      await Profile.create(profileToInsert);
+      profileCreated = true;
+      console.log('Profile seeded successfully.');
+    }
+
+    // 5. Seed Education
+    const educationCount = await Education.countDocuments();
+    if (educationCount > 0) {
+      console.warn('Education collection already populated. Skipping education seeding.');
+    } else if (education.length === 0) {
+      console.log('No static education data found.');
+    } else {
+      console.log(`Seeding ${education.length} education entries...`);
+      const educationToInsert = education.map((edu: any, index: number) => ({
+        year: edu.year,
+        degree: edu.degree,
+        institution: edu.institution,
+        description: edu.description,
+        order: edu.order ?? index,
+      }));
+      await Education.insertMany(educationToInsert);
+      educationInserted = educationToInsert.length;
+      console.log('Education seeded successfully.');
+    }
+
     console.log('\n--- Seeding Summary ---');
     console.log(`Projects inserted: ${projectsInserted}`);
     console.log(`Skills inserted:   ${skillsInserted}`);
     console.log(`Experience items:  ${experiencesInserted}`);
+    console.log(`Profile created:   ${profileCreated ? 'Yes' : 'No'}`);
+    console.log(`Education items:   ${educationInserted}`);
     console.log('-----------------------\n');
   } catch (error) {
     console.error('Seeding process failed:', error);

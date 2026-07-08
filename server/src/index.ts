@@ -15,6 +15,8 @@ import authRoutes from './routes/auth';
 import projectRoutes from './routes/projects';
 import skillRoutes from './routes/skills';
 import experienceRoutes from './routes/experience';
+import profileRoutes from './routes/profile';
+import educationRoutes from './routes/education';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -53,6 +55,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/skills', skillRoutes);
 app.use('/api/experience', experienceRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/education', educationRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
