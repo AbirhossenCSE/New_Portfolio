@@ -2,12 +2,19 @@ import dotenv from 'dotenv';
 // Load environment variables before any other imports that might depend on them
 dotenv.config();
 
+import dns from 'dns';
+// Force Node.js to use Google's public DNS servers for resolving MongoDB's SRV records
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { connectDB } from './config/db';
 import contactRoutes from './routes/contact';
 import authRoutes from './routes/auth';
+import projectRoutes from './routes/projects';
+import skillRoutes from './routes/skills';
+import experienceRoutes from './routes/experience';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -43,6 +50,9 @@ app.use(express.json());
 // Mount API routes
 app.use('/api/contact', contactRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/skills', skillRoutes);
+app.use('/api/experience', experienceRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

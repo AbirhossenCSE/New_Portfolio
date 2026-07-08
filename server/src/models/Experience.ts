@@ -1,42 +1,49 @@
 import { Schema, model, Document } from 'mongoose';
 
-export interface IMessage extends Document {
-  name: string;
-  email: string;
-  message: string;
+export interface IExperience extends Document {
+  role: string;
+  company: string;
+  duration: string;
+  current: boolean;
+  description: string;
+  order: number;
   createdAt: Date;
-  status: string;
+  updatedAt: Date;
 }
 
-const messageSchema = new Schema<IMessage>(
+const experienceSchema = new Schema<IExperience>(
   {
-    name: {
+    role: {
       type: String,
       required: true,
       trim: true
     },
-    email: {
+    company: {
       type: String,
       required: true,
       trim: true
     },
-    message: {
+    duration: {
       type: String,
       required: true,
       trim: true
     },
-    createdAt: {
-      type: Date,
-      default: Date.now
+    current: {
+      type: Boolean,
+      default: false
     },
-    status: {
+    description: {
       type: String,
-      enum: ['Unread', 'Read', 'Important'],
-      default: 'Unread'
+      required: true,
+      trim: true
+    },
+    order: {
+      type: Number,
+      default: 0
     }
   },
   {
-    collection: 'message', // strictly map to 'message' collection (not messages)
+    timestamps: true,
     toJSON: {
       transform: (doc, ret) => {
         delete (ret as any).__v;
@@ -52,4 +59,4 @@ const messageSchema = new Schema<IMessage>(
   }
 );
 
-export const Message = model<IMessage>('Message', messageSchema);
+export const Experience = model<IExperience>('Experience', experienceSchema);

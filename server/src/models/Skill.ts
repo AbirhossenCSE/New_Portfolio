@@ -1,42 +1,45 @@
 import { Schema, model, Document } from 'mongoose';
 
-export interface IMessage extends Document {
+export interface ISkill extends Document {
   name: string;
-  email: string;
-  message: string;
+  description: string;
+  level: number;
+  category: string;
+  order: number;
   createdAt: Date;
-  status: string;
+  updatedAt: Date;
 }
 
-const messageSchema = new Schema<IMessage>(
+const skillSchema = new Schema<ISkill>(
   {
     name: {
       type: String,
       required: true,
       trim: true
     },
-    email: {
+    description: {
       type: String,
       required: true,
       trim: true
     },
-    message: {
+    level: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 100
+    },
+    category: {
       type: String,
       required: true,
       trim: true
     },
-    createdAt: {
-      type: Date,
-      default: Date.now
-    },
-    status: {
-      type: String,
-      enum: ['Unread', 'Read', 'Important'],
-      default: 'Unread'
+    order: {
+      type: Number,
+      default: 0
     }
   },
   {
-    collection: 'message', // strictly map to 'message' collection (not messages)
+    timestamps: true,
     toJSON: {
       transform: (doc, ret) => {
         delete (ret as any).__v;
@@ -52,4 +55,4 @@ const messageSchema = new Schema<IMessage>(
   }
 );
 
-export const Message = model<IMessage>('Message', messageSchema);
+export const Skill = model<ISkill>('Skill', skillSchema);

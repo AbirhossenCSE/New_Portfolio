@@ -38,3 +38,8 @@ bunfig.toml
 server/node_modules
 server/.env
 server/dist
+
+# Root ignores
+.env
+.env.local
+

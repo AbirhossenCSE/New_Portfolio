@@ -65,8 +65,8 @@ router.put('/:id/status', authenticateToken, async (req: AuthRequest, res: Respo
   const { id } = req.params;
   const { status } = req.body;
 
-  if (!status || typeof status !== 'string' || status.trim() === '') {
-    res.status(400).json({ error: 'Status is required and must be a non-empty string.' });
+  if (!status || typeof status !== 'string' || !['Unread', 'Read', 'Important'].includes(status.trim())) {
+    res.status(400).json({ error: 'Status is required and must be one of: Unread, Read, Important.' });
     return;
   }
 
