@@ -34,3 +34,7 @@ dist-ssr
 bun.lock
 bunfig.toml
 
+# Server backend ignores
+server/node_modules
+server/.env
+server/dist
