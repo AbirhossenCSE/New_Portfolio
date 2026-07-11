@@ -11,14 +11,12 @@ import {
   RefreshCw,
   type LucideIcon,
 } from "lucide-react";
-import {
-  Reveal,
-  staggerContainer,
-  staggerItem,
-} from "@/components/motion/Reveal";
+import { Reveal } from "@/components/motion/Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 interface SkillItem {
   _id?: string;
@@ -51,7 +49,7 @@ function SkillBar({ level }: { level: number }) {
   return (
     <div
       ref={ref}
-      className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-muted"
+      className="mt-3.5 h-2 w-full overflow-hidden rounded-full bg-muted"
     >
       <motion.div
         initial={{ width: 0 }}
@@ -59,6 +57,31 @@ function SkillBar({ level }: { level: number }) {
         transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
         className="h-full rounded-full bg-gradient-primary"
       />
+    </div>
+  );
+}
+
+function SkillCard({ skill }: { skill: SkillItem }) {
+  return (
+    <div className="group rounded-2xl border border-border bg-card p-5 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-card flex flex-col justify-between relative">
+      <div>
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-sm font-semibold text-foreground">
+            {skill.name}
+          </span>
+          <span className="text-xs font-semibold text-primary">
+            {skill.level}%
+          </span>
+        </div>
+
+        <SkillBar level={skill.level} />
+      </div>
+
+      {skill.description && (
+        <p className="mt-3.5 text-xs leading-relaxed text-muted-foreground line-clamp-2">
+          {skill.description}
+        </p>
+      )}
     </div>
   );
 }
@@ -123,33 +146,38 @@ export function Skills() {
 
         {/* Loading State */}
         {isLoading && (
-          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="rounded-2xl border border-border bg-card p-6 shadow-soft"
-              >
-                <div className="mb-5 flex items-center gap-3">
-                  <Skeleton className="h-11 w-11 rounded-xl" />
-                  <div className="space-y-2 flex-1">
-                    <Skeleton className="h-5 w-24" />
-                    <Skeleton className="h-3 w-16" />
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  {[1, 2, 3].map((j) => (
-                    <div key={j} className="space-y-2">
-                      <div className="flex justify-between">
-                        <Skeleton className="h-4 w-16" />
-                        <Skeleton className="h-4 w-8" />
-                      </div>
-                      <Skeleton className="h-1.5 w-full rounded-full" />
-                      <Skeleton className="h-8 w-full" />
-                    </div>
-                  ))}
-                </div>
+          <div className="mt-14 space-y-8 animate-pulse">
+            {/* Skeleton Tabs List */}
+            <div className="flex flex-wrap gap-2 justify-center max-w-2xl mx-auto p-1.5 bg-muted/20 border border-border/10 rounded-2xl h-12 items-center">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Skeleton key={i} className="h-8 w-24 rounded-xl" />
+              ))}
+            </div>
+
+            {/* Skeleton Active Tab Header */}
+            <div className="flex items-center gap-3">
+              <Skeleton className="h-11 w-11 rounded-xl" />
+              <div className="space-y-2 flex-1">
+                <Skeleton className="h-5 w-24" />
+                <Skeleton className="h-3 w-16" />
               </div>
-            ))}
+            </div>
+
+            {/* Skeleton Skills Grid */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl border border-border bg-card p-5 shadow-soft h-[88px] flex flex-col justify-between"
+                >
+                  <div className="flex justify-between items-center">
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-4 w-8" />
+                  </div>
+                  <Skeleton className="h-2 w-full rounded-full" />
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
@@ -174,7 +202,7 @@ export function Skills() {
           </div>
         )}
 
-        {/* Success State */}
+        {/* Empty State */}
         {!isLoading && !error && categories.length === 0 && (
           <div className="mt-14 text-center text-muted-foreground">
             No skills found in database. Check back later or log in to the admin
@@ -182,58 +210,65 @@ export function Skills() {
           </div>
         )}
 
+        {/* Success State */}
         {!isLoading && !error && categories.length > 0 && (
-          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {categories.map((cat, ci) => {
-              const Icon = categoryIcons[cat.category] ?? Wrench;
-              return (
-                <Reveal key={cat.category} delay={ci * 0.06}>
-                  <div className="group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all hover:-translate-y-1.5 hover:shadow-card">
-                    <div className="mb-5 flex items-center gap-3">
-                      <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-soft transition-transform group-hover:scale-105">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold text-foreground">
-                          {cat.category}
-                        </h3>
-                        <p className="text-xs text-muted-foreground">
-                          {cat.skills.length} technologies
-                        </p>
-                      </div>
-                    </div>
-
-                    <motion.ul
-                      variants={staggerContainer}
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: true, margin: "-40px" }}
-                      className="space-y-4"
+          <div className="mt-14">
+            <Tabs
+              defaultValue={categories[0].category}
+              className="w-full space-y-8"
+            >
+              <TabsList className="flex flex-wrap h-auto gap-1 bg-muted/40 p-1.5 rounded-2xl border border-border/30 max-w-2xl mx-auto justify-center">
+                {categories.map((cat) => {
+                  const Icon = categoryIcons[cat.category] ?? Wrench;
+                  return (
+                    <TabsTrigger
+                      key={cat.category}
+                      value={cat.category}
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold cursor-pointer data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-soft"
                     >
-                      {cat.skills.map((skill) => (
-                        <motion.li
-                          key={skill._id || skill.name}
-                          variants={staggerItem}
-                        >
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="text-sm font-semibold text-foreground">
-                              {skill.name}
-                            </span>
-                            <span className="text-xs font-semibold text-primary">
-                              {skill.level}%
-                            </span>
-                          </div>
-                          <SkillBar level={skill.level} />
-                          <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                            {skill.description}
+                      <Icon className="h-3.5 w-3.5" />
+                      <span>{cat.category}</span>
+                    </TabsTrigger>
+                  );
+                })}
+              </TabsList>
+
+              {categories.map((cat) => {
+                const Icon = categoryIcons[cat.category] ?? Wrench;
+                return (
+                  <TabsContent
+                    key={cat.category}
+                    value={cat.category}
+                    className="mt-6 focus-visible:outline-none"
+                  >
+                    <Reveal>
+                      <div className="mb-6 flex items-center gap-3">
+                        <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-soft">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-bold text-foreground">
+                            {cat.category}
+                          </h3>
+                          <p className="text-xs text-muted-foreground">
+                            {cat.skills.length} technologies
                           </p>
-                        </motion.li>
-                      ))}
-                    </motion.ul>
-                  </div>
-                </Reveal>
-              );
-            })}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {cat.skills.map((skill) => (
+                          <SkillCard
+                            key={skill._id || skill.name}
+                            skill={skill}
+                          />
+                        ))}
+                      </div>
+                    </Reveal>
+                  </TabsContent>
+                );
+              })}
+            </Tabs>
           </div>
         )}
       </div>
