@@ -32,12 +32,12 @@ const loadStaticData = () => {
   // mapping them to mock local asset paths that the Vite dev server can serve.
   const cleanedCode = tsCode
     .replace(
-      /import\s+abirHome\s+from\s+['"]@\/assets\/abir-home\.png['"];?/g,
-      'const abirHome = "/src/assets/abir-home.png";',
+      /(import\s+abirHome\s+from\s+['"].*?['"]|const\s+abirHome\s+=\s+['"].*?['"]);?/g,
+      'const abirHome = "/abir-home.png";',
     )
     .replace(
-      /import\s+abirAbout\s+from\s+['"]@\/assets\/abir-about\.jpg['"];?/g,
-      'const abirAbout = "/src/assets/abir-about.jpg";',
+      /(import\s+abirAbout\s+from\s+['"].*?['"]|const\s+abirAbout\s+=\s+['"].*?['"]);?/g,
+      'const abirAbout = "/abir-about.jpg";',
     );
 
   // Transpile TypeScript to JavaScript utilizing ts compiler

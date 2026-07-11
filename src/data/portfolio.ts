@@ -1,5 +1,5 @@
-import abirHome from "@/assets/abir-home.png";
-import abirAbout from "@/assets/abir-about.jpg";
+const abirHome = "/abir-home.png";
+const abirAbout = "/abir-about.jpg";
 
 export const profile = {
   name: "Abir Hossen",

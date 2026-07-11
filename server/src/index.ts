@@ -9,6 +9,7 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import mongoose from "mongoose";
 import { connectDB } from "./config/db";
 import contactRoutes from "./routes/contact";
 import authRoutes from "./routes/auth";
@@ -36,10 +37,10 @@ app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps, curl, or server-to-server) or matching frontendUrl
-      if (!origin || origin === frontendUrl) {
+      if (!origin || (frontendUrl && origin === frontendUrl)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        callback(null, false);
       }
     },
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -65,15 +66,64 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
-// Connect to database and start server
-const startServer = async () => {
-  await connectDB();
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
-};
+// Detailed MongoDB and Env environment health check (not exposing secrets)
+app.get("/api/health-check", async (req, res) => {
+  const dbStatus = mongoose.connection.readyState;
+  const dbStateMap: Record<number, string> = {
+    0: "disconnected",
+    1: "connected",
+    2: "connecting",
+    3: "disconnecting",
+  };
 
-startServer().catch((error) => {
-  console.error("Failed to start server:", error);
-  process.exit(1);
+  let dbConnected = false;
+  let dbPingError = null;
+
+  if (dbStatus === 1) {
+    try {
+      await mongoose.connection.db?.admin().ping();
+      dbConnected = true;
+    } catch (err: any) {
+      dbPingError = err.message || String(err);
+    }
+  }
+
+  const requiredEnv = [
+    "MONGODB_URI",
+    "JWT_SECRET",
+    "ADMIN_USERNAME",
+    "ADMIN_PASSWORD_HASH",
+    "FRONTEND_URL",
+  ];
+  const missingEnv = requiredEnv.filter((name) => !process.env[name]);
+
+  res.status(dbConnected ? 200 : 500).json({
+    status: dbConnected ? "healthy" : "unhealthy",
+    database: {
+      status: dbStateMap[dbStatus] || "unknown",
+      connected: dbConnected,
+      pingError: dbPingError,
+    },
+    environment: {
+      vercel: !!process.env.VERCEL,
+      missingVariables: missingEnv,
+    },
+  });
 });
+
+// Connect to database and start server (only if not running in Vercel Serverless environment)
+if (!process.env.VERCEL) {
+  const startServer = async () => {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  };
+
+  startServer().catch((error) => {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  });
+}
+
+export default app;

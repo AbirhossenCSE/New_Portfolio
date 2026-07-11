@@ -1,0 +1,12 @@
+.env
+.env.local
+.env.development
+.env.production
+node_modules
+.output
+.vinxi
+.tanstack
+.wrangler
+.git
+logs
+*.log

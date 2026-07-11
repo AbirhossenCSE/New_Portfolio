@@ -3,10 +3,18 @@ import mongoose from "mongoose";
 export const connectDB = async (): Promise<void> => {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
-    console.error(
-      "Error: MONGODB_URI is not defined in the environment variables.",
-    );
-    process.exit(1);
+    const errMsg =
+      "Error: MONGODB_URI is not defined in the environment variables.";
+    console.error(errMsg);
+    if (process.env.VERCEL) {
+      throw new Error(errMsg);
+    } else {
+      process.exit(1);
+    }
+  }
+
+  if (mongoose.connection.readyState >= 1) {
+    return;
   }
 
   try {
@@ -15,7 +23,12 @@ export const connectDB = async (): Promise<void> => {
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error(`Error connecting to MongoDB: ${(error as Error).message}`);
-    process.exit(1);
+    const errMsg = `Error connecting to MongoDB: ${(error as Error).message}`;
+    console.error(errMsg);
+    if (process.env.VERCEL) {
+      throw new Error(errMsg);
+    } else {
+      process.exit(1);
+    }
   }
 };

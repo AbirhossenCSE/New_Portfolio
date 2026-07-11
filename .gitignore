@@ -43,3 +43,5 @@ server/dist
 .env
 .env.local
 
+
+.vercel
