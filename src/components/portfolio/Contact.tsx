@@ -48,19 +48,57 @@ const socials = [
   { icon: Facebook, href: profile.socials.facebook, label: "Facebook" },
 ];
 
+const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 export function Contact() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
+    setError(null);
+    setLoading(true);
+
     const form = e.currentTarget;
     const data = new FormData(form);
-    const name = encodeURIComponent(String(data.get("name") ?? ""));
-    const message = encodeURIComponent(String(data.get("message") ?? ""));
-    window.location.href = `mailto:${profile.email}?subject=Portfolio message from ${name}&body=${message}`;
-    setTimeout(() => setSent(false), 4000);
-    form.reset();
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const subject = String(data.get("subject") ?? "").trim();
+    const rawMessage = String(data.get("message") ?? "").trim();
+
+    const message = subject ? `${subject}\n\n${rawMessage}` : rawMessage;
+
+    try {
+      const res = await fetch(`${apiUrl}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (res.status === 201) {
+        setSent(true);
+        form.reset();
+        setTimeout(() => setSent(false), 4000);
+      } else if (res.status === 400) {
+        const errData = await res.json();
+        if (errData.details && Array.isArray(errData.details)) {
+          setError(errData.details.join(" "));
+        } else {
+          setError(errData.error || "Validation failed.");
+        }
+      } else if (res.status === 429) {
+        setError("Too many messages sent, please try again later.");
+      } else {
+        setError("Something went wrong, please try again.");
+      }
+    } catch (err) {
+      setError("Something went wrong, please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -184,13 +222,45 @@ export function Contact() {
                   />
                 </div>
 
+                {error && (
+                  <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-3.5 text-xs text-destructive flex items-center gap-2">
+                    <span className="font-semibold">Error:</span>
+                    <span>{error}</span>
+                  </div>
+                )}
+
                 <motion.button
                   type="submit"
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-primary px-5 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft transition-shadow hover:shadow-lift"
+                  disabled={loading || sent}
+                  whileHover={loading || sent ? {} : { y: -2 }}
+                  whileTap={loading || sent ? {} : { scale: 0.97 }}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-primary px-5 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft transition-shadow hover:shadow-lift disabled:opacity-75 disabled:pointer-events-none"
                 >
-                  {sent ? (
+                  {loading ? (
+                    <>
+                      <svg
+                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-primary-foreground"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Sending...
+                    </>
+                  ) : sent ? (
                     <>
                       <CheckCircle2 className="h-4 w-4" /> Message ready!
                     </>
