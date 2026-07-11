@@ -17,7 +17,12 @@ interface EducationItem {
 export function Education() {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-  const { data: education = [], isLoading, error, refetch } = useQuery<EducationItem[]>({
+  const {
+    data: education = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery<EducationItem[]>({
     queryKey: ["education"],
     queryFn: async () => {
       const res = await fetch(`${apiUrl}/api/education`);
@@ -25,7 +30,7 @@ export function Education() {
         throw new Error("Failed to load education from server.");
       }
       return res.json();
-    }
+    },
   });
 
   if (isLoading) {
@@ -57,13 +62,20 @@ export function Education() {
 
   if (error) {
     return (
-      <section id="education" className="relative py-20 md:py-28 flex items-center justify-center">
+      <section
+        id="education"
+        className="relative py-20 md:py-28 flex items-center justify-center"
+      >
         <div className="text-center space-y-4 max-w-md px-4">
           <div className="mx-auto w-12 h-12 rounded-full bg-destructive/15 flex items-center justify-center text-destructive">
             <AlertCircle className="h-6 w-6" />
           </div>
-          <h3 className="text-lg font-bold text-foreground">Failed to load education</h3>
-          <p className="text-sm text-muted-foreground">The portfolio server might be offline or failed to respond.</p>
+          <h3 className="text-lg font-bold text-foreground">
+            Failed to load education
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            The portfolio server might be offline or failed to respond.
+          </p>
           <Button onClick={() => refetch()} className="cursor-pointer">
             <RefreshCw className="h-4 w-4 mr-2" /> Retry Connection
           </Button>
@@ -96,8 +108,12 @@ export function Education() {
                     <span className="inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                       {edu.year}
                     </span>
-                    <h3 className="mt-3 text-lg font-bold text-foreground">{edu.degree}</h3>
-                    <p className="mt-0.5 text-sm font-medium text-primary">{edu.institution}</p>
+                    <h3 className="mt-3 text-lg font-bold text-foreground">
+                      {edu.degree}
+                    </h3>
+                    <p className="mt-0.5 text-sm font-medium text-primary">
+                      {edu.institution}
+                    </p>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                       {edu.description}
                     </p>

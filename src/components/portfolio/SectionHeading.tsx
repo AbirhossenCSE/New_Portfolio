@@ -7,11 +7,18 @@ type Props = {
   align?: "center" | "left";
 };
 
-export function SectionHeading({ eyebrow, title, description, align = "center" }: Props) {
+export function SectionHeading({
+  eyebrow,
+  title,
+  description,
+  align = "center",
+}: Props) {
   return (
     <Reveal
       className={
-        align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl text-left"
+        align === "center"
+          ? "mx-auto max-w-2xl text-center"
+          : "max-w-2xl text-left"
       }
     >
       <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary">

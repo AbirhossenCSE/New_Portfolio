@@ -4,7 +4,12 @@ import abirAbout from "@/assets/abir-about.jpg";
 export const profile = {
   name: "Abir Hossen",
   fullName: "Md. Abir Hossen",
-  roles: ["Frontend Developer", "Full-Stack Developer", "React Developer", "MERN Stack Developer"],
+  roles: [
+    "Frontend Developer",
+    "Full-Stack Developer",
+    "React Developer",
+    "MERN Stack Developer",
+  ],
   intro:
     "Passionate web developer with a degree in Computer Science & Engineering and hands-on experience in developing dynamic web applications.",
   availability: "Available for Full-time & Freelance",
@@ -143,7 +148,8 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       {
         name: "MongoDB",
-        description: "NoSQL database for storing & managing data with efficient queries.",
+        description:
+          "NoSQL database for storing & managing data with efficient queries.",
         level: 84,
       },
       {
@@ -177,7 +183,8 @@ export const skillCategories: SkillCategory[] = [
       },
       {
         name: "VS Code",
-        description: "My go-to editor with custom extensions & snippets for productivity.",
+        description:
+          "My go-to editor with custom extensions & snippets for productivity.",
         level: 92,
       },
       {
@@ -273,7 +280,14 @@ export const projects: Project[] = [
     description:
       "A simple and efficient Task Management Application built with React, Vite, Firebase authentication, and drag-and-drop functionality for seamless task organization.",
     image: "https://i.ibb.co.com/tTLBMbDd/Task-Management-System.jpg",
-    tech: ["React.js", "Firebase", "Tailwind CSS", "Node.js", "Express.js", "MongoDB"],
+    tech: [
+      "React.js",
+      "Firebase",
+      "Tailwind CSS",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+    ],
     live: "https://simple-firebase-df58a.web.app/",
     github: "https://github.com/AbirhossenCSE/",
   },
@@ -291,7 +305,14 @@ export const projects: Project[] = [
     description:
       "A web app providing career guidance and resources based on user preferences and interests.",
     image: "https://i.ibb.co.com/yBsNb4pc/SES.jpg",
-    tech: ["React.js", "Firebase", "Tailwind CSS", "Node.js", "Express.js", "MongoDB"],
+    tech: [
+      "React.js",
+      "Firebase",
+      "Tailwind CSS",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+    ],
     live: "https://auth-moha-milon-88362.web.app/",
     github: "https://github.com/AbirhossenCSE/",
   },
@@ -300,7 +321,14 @@ export const projects: Project[] = [
     description:
       "ShareLink lets users upload files (images, PDFs) and text, generate shareable links, and manage access settings. Supports public/private links with authentication.",
     image: "https://i.ibb.co.com/dw8ddv1J/Share-Link.jpg",
-    tech: ["React.js", "Firebase", "Tailwind CSS", "Node.js", "Express.js", "MongoDB"],
+    tech: [
+      "React.js",
+      "Firebase",
+      "Tailwind CSS",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+    ],
     live: "https://sharelink-8fda4.web.app/",
     github: "https://github.com/AbirhossenCSE/",
   },

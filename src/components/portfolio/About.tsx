@@ -1,7 +1,18 @@
 import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, MapPin, Layers, AlertCircle, RefreshCw } from "lucide-react";
+import {
+  Briefcase,
+  GraduationCap,
+  MapPin,
+  Layers,
+  AlertCircle,
+  RefreshCw,
+} from "lucide-react";
 import { useProfile } from "@/hooks/useProfile";
-import { Reveal, staggerContainer, staggerItem } from "@/components/motion/Reveal";
+import {
+  Reveal,
+  staggerContainer,
+  staggerItem,
+} from "@/components/motion/Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -47,13 +58,20 @@ export function About() {
 
   if (error || !profile) {
     return (
-      <section id="about" className="relative py-25 md:py-32 flex items-center justify-center bg-background">
+      <section
+        id="about"
+        className="relative py-25 md:py-32 flex items-center justify-center bg-background"
+      >
         <div className="text-center space-y-4 max-w-md px-4">
           <div className="mx-auto w-12 h-12 rounded-full bg-destructive/15 flex items-center justify-center text-destructive">
             <AlertCircle className="h-6 w-6" />
           </div>
-          <h3 className="text-lg font-bold text-foreground">Failed to load profile details</h3>
-          <p className="text-sm text-muted-foreground">The portfolio server might be offline or failed to respond.</p>
+          <h3 className="text-lg font-bold text-foreground">
+            Failed to load profile details
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            The portfolio server might be offline or failed to respond.
+          </p>
           <Button onClick={() => refetch()} className="cursor-pointer">
             <RefreshCw className="h-4 w-4 mr-2" /> Retry Connection
           </Button>
@@ -106,7 +124,9 @@ export function About() {
                     <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                       {info.label}
                     </p>
-                    <p className="mt-0.5 text-sm font-semibold text-foreground">{info.value}</p>
+                    <p className="mt-0.5 text-sm font-semibold text-foreground">
+                      {info.value}
+                    </p>
                   </motion.div>
                 );
               })}

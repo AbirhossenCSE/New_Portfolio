@@ -82,7 +82,11 @@ export function Navbar() {
             aria-label="Toggle dark mode"
             className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-card/50 text-foreground transition-colors hover:bg-primary/10 hover:text-primary"
           >
-            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
           </button>
 
           <a

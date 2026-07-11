@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document } from "mongoose";
 
 export interface IProject extends Document {
   title: string;
@@ -18,40 +18,40 @@ const projectSchema = new Schema<IProject>(
     title: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     description: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     image: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     tech: {
       type: [String],
-      required: true
+      required: true,
     },
     live: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     github: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     featured: {
       type: Boolean,
-      default: false
+      default: false,
     },
     order: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   {
     timestamps: true,
@@ -59,15 +59,15 @@ const projectSchema = new Schema<IProject>(
       transform: (doc, ret) => {
         delete (ret as any).__v;
         return ret;
-      }
+      },
     },
     toObject: {
       transform: (doc, ret) => {
         delete (ret as any).__v;
         return ret;
-      }
-    }
-  }
+      },
+    },
+  },
 );
 
-export const Project = model<IProject>('Project', projectSchema);
+export const Project = model<IProject>("Project", projectSchema);

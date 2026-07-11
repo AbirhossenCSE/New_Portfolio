@@ -26,8 +26,8 @@ export function Footer() {
               Abir Hossen
             </button>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Full-Stack Developer building modern, scalable, and performance-driven web
-              applications.
+              Full-Stack Developer building modern, scalable, and
+              performance-driven web applications.
             </p>
           </div>
 
@@ -61,7 +61,8 @@ export function Footer() {
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} {profile.fullName}. All rights reserved.
+            © {new Date().getFullYear()} {profile.fullName}. All rights
+            reserved.
           </p>
           <button
             onClick={() => scrollTo("home")}

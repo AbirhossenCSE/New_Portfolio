@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document } from "mongoose";
 
 export interface IEducation extends Document {
   year: string;
@@ -15,27 +15,27 @@ const educationSchema = new Schema<IEducation>(
     year: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     degree: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     institution: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     description: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
     order: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   {
     timestamps: true,
@@ -43,15 +43,15 @@ const educationSchema = new Schema<IEducation>(
       transform: (doc, ret) => {
         delete (ret as any).__v;
         return ret;
-      }
+      },
     },
     toObject: {
       transform: (doc, ret) => {
         delete (ret as any).__v;
         return ret;
-      }
-    }
-  }
+      },
+    },
+  },
 );
 
-export const Education = model<IEducation>('Education', educationSchema);
+export const Education = model<IEducation>("Education", educationSchema);

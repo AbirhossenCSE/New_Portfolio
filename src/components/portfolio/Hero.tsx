@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Facebook, Github, Linkedin, Mail, Sparkles, AlertCircle, RefreshCw } from "lucide-react";
+import {
+  ArrowRight,
+  Download,
+  Facebook,
+  Github,
+  Linkedin,
+  Mail,
+  Sparkles,
+  AlertCircle,
+  RefreshCw,
+} from "lucide-react";
 import { useProfile } from "@/hooks/useProfile";
 import { AnimatedCounter } from "./AnimatedCounter";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -29,7 +39,9 @@ function useTypewriter(words: string[]) {
         setWordIndex((i) => i + 1);
       } else {
         setText(
-          deleting ? word.slice(0, text.length - 1) : word.slice(0, text.length + 1),
+          deleting
+            ? word.slice(0, text.length - 1)
+            : word.slice(0, text.length + 1),
         );
       }
     }, delay);
@@ -49,7 +61,10 @@ export function Hero() {
 
   if (isLoading) {
     return (
-      <section id="home" className="relative overflow-hidden pb-16 pt-32 sm:pt-36 md:pb-24 md:pt-40">
+      <section
+        id="home"
+        className="relative overflow-hidden pb-16 pt-32 sm:pt-36 md:pb-24 md:pt-40"
+      >
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-6">
             <Skeleton className="h-8 w-44 rounded-full" />
@@ -71,13 +86,20 @@ export function Hero() {
 
   if (error || !profile) {
     return (
-      <section id="home" className="relative overflow-hidden pb-16 pt-32 sm:pt-36 md:pb-24 md:pt-40 flex items-center justify-center">
+      <section
+        id="home"
+        className="relative overflow-hidden pb-16 pt-32 sm:pt-36 md:pb-24 md:pt-40 flex items-center justify-center"
+      >
         <div className="text-center space-y-4 max-w-md px-4">
           <div className="mx-auto w-12 h-12 rounded-full bg-destructive/15 flex items-center justify-center text-destructive">
             <AlertCircle className="h-6 w-6" />
           </div>
-          <h3 className="text-lg font-bold text-foreground">Failed to load profile</h3>
-          <p className="text-sm text-muted-foreground">The portfolio server might be offline or failed to respond.</p>
+          <h3 className="text-lg font-bold text-foreground">
+            Failed to load profile
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            The portfolio server might be offline or failed to respond.
+          </p>
           <Button onClick={() => refetch()} className="cursor-pointer">
             <RefreshCw className="h-4 w-4 mr-2" /> Retry Connection
           </Button>
@@ -87,7 +109,10 @@ export function Hero() {
   }
 
   return (
-    <section id="home" className="relative overflow-hidden pb-16 pt-32 sm:pt-36 md:pb-24 md:pt-40">
+    <section
+      id="home"
+      className="relative overflow-hidden pb-16 pt-32 sm:pt-36 md:pb-24 md:pt-40"
+    >
       {/* Animated background blobs */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -left-24 top-8 h-72 w-72 rounded-full bg-primary/20 blur-3xl animate-blob" />
@@ -99,7 +124,8 @@ export function Hero() {
             backgroundImage:
               "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-foreground) 12%, transparent) 1px, transparent 0)",
             backgroundSize: "36px 36px",
-            maskImage: "radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent)",
+            maskImage:
+              "radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent)",
           }}
         />
       </div>
@@ -119,8 +145,7 @@ export function Hero() {
           </span>
 
           <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-5xl md:text-6xl">
-            Hi, I'm{" "}
-            <span className="text-gradient">{profile.name}</span>
+            Hi, I'm <span className="text-gradient">{profile.name}</span>
           </h1>
 
           <div className="mt-4 flex items-center text-xl font-semibold text-muted-foreground sm:text-2xl">
@@ -162,8 +187,16 @@ export function Hero() {
           <div className="mt-8 flex items-center gap-3">
             {[
               { icon: Github, href: profile.socials.github, label: "GitHub" },
-              { icon: Linkedin, href: profile.socials.linkedin, label: "LinkedIn" },
-              { icon: Facebook, href: profile.socials.facebook, label: "Facebook" },
+              {
+                icon: Linkedin,
+                href: profile.socials.linkedin,
+                label: "LinkedIn",
+              },
+              {
+                icon: Facebook,
+                href: profile.socials.facebook,
+                label: "Facebook",
+              },
             ].map(({ icon: Icon, href, label }) => (
               <a
                 key={label}

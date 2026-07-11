@@ -18,7 +18,12 @@ interface ExperienceItem {
 export function Experience() {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-  const { data: experiences = [], isLoading, error, refetch } = useQuery<ExperienceItem[]>({
+  const {
+    data: experiences = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery<ExperienceItem[]>({
     queryKey: ["experiences"],
     queryFn: async () => {
       const res = await fetch(`${apiUrl}/api/experience`);
@@ -26,7 +31,7 @@ export function Experience() {
         throw new Error("Failed to load professional experience.");
       }
       return res.json();
-    }
+    },
   });
 
   return (
@@ -55,11 +60,17 @@ export function Experience() {
                     <span className="h-1.5 w-1.5 rounded-full bg-primary-foreground" />
                   </span>
                   <div className="rounded-2xl border border-border bg-card p-6 shadow-soft space-y-3">
-                    <div className={`flex items-center gap-2 ${i % 2 === 1 ? "md:justify-end" : ""}`}>
+                    <div
+                      className={`flex items-center gap-2 ${i % 2 === 1 ? "md:justify-end" : ""}`}
+                    >
                       <Skeleton className="h-6 w-32 rounded-full" />
                     </div>
-                    <Skeleton className={`h-6 w-48 ${i % 2 === 1 ? "md:ml-auto" : ""}`} />
-                    <Skeleton className={`h-4 w-36 ${i % 2 === 1 ? "md:ml-auto" : ""}`} />
+                    <Skeleton
+                      className={`h-6 w-48 ${i % 2 === 1 ? "md:ml-auto" : ""}`}
+                    />
+                    <Skeleton
+                      className={`h-4 w-36 ${i % 2 === 1 ? "md:ml-auto" : ""}`}
+                    />
                     <Skeleton className="h-16 w-full" />
                   </div>
                 </div>
@@ -72,9 +83,18 @@ export function Experience() {
         {error && (
           <div className="mt-14 flex flex-col items-center justify-center rounded-2xl border border-destructive/20 bg-destructive/5 p-8 text-center max-w-lg mx-auto">
             <AlertCircle className="h-10 w-10 text-destructive mb-3" />
-            <h3 className="text-lg font-bold text-foreground">Unable to load experience</h3>
-            <p className="text-sm text-muted-foreground mt-1 mb-5">{(error as Error).message}</p>
-            <Button variant="outline" size="sm" onClick={() => refetch()} className="cursor-pointer">
+            <h3 className="text-lg font-bold text-foreground">
+              Unable to load experience
+            </h3>
+            <p className="text-sm text-muted-foreground mt-1 mb-5">
+              {(error as Error).message}
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => refetch()}
+              className="cursor-pointer"
+            >
               <RefreshCw className="h-4 w-4 mr-2" /> Retry connection
             </Button>
           </div>
@@ -83,7 +103,8 @@ export function Experience() {
         {/* Success State */}
         {!isLoading && !error && experiences.length === 0 && (
           <div className="mt-14 text-center text-muted-foreground">
-            No professional experience listed in database. Check back later or log in to the admin panel to add them.
+            No professional experience listed in database. Check back later or
+            log in to the admin panel to add them.
           </div>
         )}
 
@@ -120,7 +141,9 @@ export function Experience() {
                         ) : null}
                       </div>
 
-                      <h3 className="mt-3 text-xl font-bold text-foreground">{job.role}</h3>
+                      <h3 className="mt-3 text-xl font-bold text-foreground">
+                        {job.role}
+                      </h3>
                       <div
                         className={`mt-1 flex items-center gap-1.5 text-sm font-medium text-muted-foreground ${
                           i % 2 === 0 ? "md:justify-end" : ""

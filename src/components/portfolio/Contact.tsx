@@ -77,7 +77,9 @@ export function Contact() {
           {/* Left: contact info */}
           <Reveal>
             <div className="flex h-full flex-col rounded-3xl border border-border bg-card p-7 shadow-card sm:p-8">
-              <h3 className="text-xl font-bold text-foreground">Contact Details</h3>
+              <h3 className="text-xl font-bold text-foreground">
+                Contact Details
+              </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {profile.fullName} — let's build something great together.
               </p>
@@ -93,12 +95,20 @@ export function Contact() {
                         <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                           {label}
                         </p>
-                        <p className="truncate text-sm font-semibold text-foreground">{value}</p>
+                        <p className="truncate text-sm font-semibold text-foreground">
+                          {value}
+                        </p>
                       </div>
                     </div>
                   );
                   return href ? (
-                    <a key={label} href={href} target="_blank" rel="noreferrer" className="block">
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="block"
+                    >
                       {inner}
                     </a>
                   ) : (
@@ -108,7 +118,9 @@ export function Contact() {
               </div>
 
               <div className="mt-auto pt-7">
-                <p className="text-sm font-semibold text-foreground">Follow me</p>
+                <p className="text-sm font-semibold text-foreground">
+                  Follow me
+                </p>
                 <div className="mt-3 flex gap-3">
                   {socials.map(({ icon: Icon, href, label }) => (
                     <a
@@ -133,7 +145,9 @@ export function Contact() {
               onSubmit={handleSubmit}
               className="rounded-3xl border border-border bg-card p-7 shadow-card sm:p-8"
             >
-              <h3 className="text-xl font-bold text-foreground">Send a Message</h3>
+              <h3 className="text-xl font-bold text-foreground">
+                Send a Message
+              </h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 I'll get back to you as soon as possible.
               </p>
@@ -148,7 +162,11 @@ export function Contact() {
                     placeholder="you@example.com"
                   />
                 </div>
-                <Field label="Subject" name="subject" placeholder="How can I help?" />
+                <Field
+                  label="Subject"
+                  name="subject"
+                  placeholder="How can I help?"
+                />
                 <div>
                   <label
                     htmlFor="message"
@@ -204,7 +222,10 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="mb-1.5 block text-sm font-medium text-foreground">
+      <label
+        htmlFor={name}
+        className="mb-1.5 block text-sm font-medium text-foreground"
+      >
         {label}
       </label>
       <input

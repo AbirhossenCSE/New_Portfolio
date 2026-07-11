@@ -11,7 +11,11 @@ import {
   RefreshCw,
   type LucideIcon,
 } from "lucide-react";
-import { Reveal, staggerContainer, staggerItem } from "@/components/motion/Reveal";
+import {
+  Reveal,
+  staggerContainer,
+  staggerItem,
+} from "@/components/motion/Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -33,13 +37,22 @@ const categoryIcons: Record<string, LucideIcon> = {
   Deployment: Cloud,
 };
 
-const categoryOrderList = ["Frontend", "Backend", "Database & ORM", "Tools", "Deployment"];
+const categoryOrderList = [
+  "Frontend",
+  "Backend",
+  "Database & ORM",
+  "Tools",
+  "Deployment",
+];
 
 function SkillBar({ level }: { level: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   return (
-    <div ref={ref} className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+    <div
+      ref={ref}
+      className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-muted"
+    >
       <motion.div
         initial={{ width: 0 }}
         animate={inView ? { width: `${level}%` } : { width: 0 }}
@@ -53,7 +66,12 @@ function SkillBar({ level }: { level: number }) {
 export function Skills() {
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-  const { data: skills = [], isLoading, error, refetch } = useQuery<SkillItem[]>({
+  const {
+    data: skills = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery<SkillItem[]>({
     queryKey: ["skills"],
     queryFn: async () => {
       const res = await fetch(`${apiUrl}/api/skills`);
@@ -61,17 +79,20 @@ export function Skills() {
         throw new Error("Failed to load skills from server.");
       }
       return res.json();
-    }
+    },
   });
 
   // Group flattened skills by category
-  const groupedSkills = skills.reduce<Record<string, SkillItem[]>>((acc, skill) => {
-    if (!acc[skill.category]) {
-      acc[skill.category] = [];
-    }
-    acc[skill.category].push(skill);
-    return acc;
-  }, {});
+  const groupedSkills = skills.reduce<Record<string, SkillItem[]>>(
+    (acc, skill) => {
+      if (!acc[skill.category]) {
+        acc[skill.category] = [];
+      }
+      acc[skill.category].push(skill);
+      return acc;
+    },
+    {},
+  );
 
   // Order categories and map to structure expected by renderer
   const categories = Object.keys(groupedSkills)
@@ -85,7 +106,9 @@ export function Skills() {
     })
     .map((catName) => ({
       category: catName,
-      skills: groupedSkills[catName].sort((a, b) => a.order - b.order || a.name.localeCompare(b.name)),
+      skills: groupedSkills[catName].sort(
+        (a, b) => a.order - b.order || a.name.localeCompare(b.name),
+      ),
     }));
 
   return (
@@ -102,7 +125,10 @@ export function Skills() {
         {isLoading && (
           <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="rounded-2xl border border-border bg-card p-6 shadow-soft">
+              <div
+                key={i}
+                className="rounded-2xl border border-border bg-card p-6 shadow-soft"
+              >
                 <div className="mb-5 flex items-center gap-3">
                   <Skeleton className="h-11 w-11 rounded-xl" />
                   <div className="space-y-2 flex-1">
@@ -131,9 +157,18 @@ export function Skills() {
         {error && (
           <div className="mt-14 flex flex-col items-center justify-center rounded-2xl border border-destructive/20 bg-destructive/5 p-8 text-center max-w-lg mx-auto">
             <AlertCircle className="h-10 w-10 text-destructive mb-3" />
-            <h3 className="text-lg font-bold text-foreground">Unable to load skills</h3>
-            <p className="text-sm text-muted-foreground mt-1 mb-5">{(error as Error).message}</p>
-            <Button variant="outline" size="sm" onClick={() => refetch()} className="cursor-pointer">
+            <h3 className="text-lg font-bold text-foreground">
+              Unable to load skills
+            </h3>
+            <p className="text-sm text-muted-foreground mt-1 mb-5">
+              {(error as Error).message}
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => refetch()}
+              className="cursor-pointer"
+            >
               <RefreshCw className="h-4 w-4 mr-2" /> Retry connection
             </Button>
           </div>
@@ -142,7 +177,8 @@ export function Skills() {
         {/* Success State */}
         {!isLoading && !error && categories.length === 0 && (
           <div className="mt-14 text-center text-muted-foreground">
-            No skills found in database. Check back later or log in to the admin panel to add them.
+            No skills found in database. Check back later or log in to the admin
+            panel to add them.
           </div>
         )}
 
@@ -158,7 +194,9 @@ export function Skills() {
                         <Icon className="h-5 w-5" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold text-foreground">{cat.category}</h3>
+                        <h3 className="text-lg font-bold text-foreground">
+                          {cat.category}
+                        </h3>
                         <p className="text-xs text-muted-foreground">
                           {cat.skills.length} technologies
                         </p>
@@ -173,7 +211,10 @@ export function Skills() {
                       className="space-y-4"
                     >
                       {cat.skills.map((skill) => (
-                        <motion.li key={skill._id || skill.name} variants={staggerItem}>
+                        <motion.li
+                          key={skill._id || skill.name}
+                          variants={staggerItem}
+                        >
                           <div className="flex items-center justify-between gap-2">
                             <span className="text-sm font-semibold text-foreground">
                               {skill.name}
