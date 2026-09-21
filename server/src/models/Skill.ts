@@ -3,7 +3,9 @@ import { Schema, model, Document } from "mongoose";
 export interface ISkill extends Document {
   name: string;
   description: string;
-  level: number;
+  icon?: string;
+  badge?: string;
+  level?: number;
   category: string;
   order: number;
   createdAt: Date;
@@ -22,9 +24,19 @@ const skillSchema = new Schema<ISkill>(
       required: true,
       trim: true,
     },
+    icon: {
+      type: String,
+      default: "Code",
+      trim: true,
+    },
+    badge: {
+      type: String,
+      default: "Advanced",
+      trim: true,
+    },
     level: {
       type: Number,
-      required: true,
+      default: 90,
       min: 0,
       max: 100,
     },

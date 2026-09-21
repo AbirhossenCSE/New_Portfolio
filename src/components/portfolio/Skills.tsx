@@ -11,6 +11,7 @@ import {
   RefreshCw,
   type LucideIcon,
 } from "lucide-react";
+import { getSkillIcon } from "@/lib/skill-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -22,7 +23,9 @@ interface SkillItem {
   _id?: string;
   name: string;
   description: string;
-  level: number;
+  icon?: string;
+  badge?: string;
+  level?: number;
   category: string;
   order: number;
 }
@@ -43,46 +46,36 @@ const categoryOrderList = [
   "Deployment",
 ];
 
-function SkillBar({ level }: { level: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
-  return (
-    <div
-      ref={ref}
-      className="mt-3.5 h-2 w-full overflow-hidden rounded-full bg-muted"
-    >
-      <motion.div
-        initial={{ width: 0 }}
-        animate={inView ? { width: `${level}%` } : { width: 0 }}
-        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-        className="h-full rounded-full bg-gradient-primary"
-      />
-    </div>
-  );
-}
-
 function SkillCard({ skill }: { skill: SkillItem }) {
+  const IconComponent = getSkillIcon(skill.icon, skill.name);
+
   return (
-    <div className="group rounded-2xl border border-border bg-card p-5 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-card flex flex-col justify-between relative">
+    <motion.div
+      whileHover={{ y: -5, scale: 1.02 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/60 bg-card/80 p-5 backdrop-blur-md shadow-soft transition-all duration-300 hover:border-primary/50 hover:shadow-lift"
+    >
+      <div className="absolute top-0 right-0 -mt-6 -mr-6 h-24 w-24 rounded-full bg-primary/10 blur-2xl transition-opacity duration-300 opacity-40 group-hover:opacity-100" />
+
       <div>
-        <div className="flex items-center justify-between gap-3">
-          <span className="text-sm font-semibold text-foreground">
-            {skill.name}
-          </span>
-          <span className="text-xs font-semibold text-primary">
-            {skill.level}%
-          </span>
+        <div className="flex items-center gap-3.5">
+          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-soft transition-transform duration-300 group-hover:scale-110">
+            <IconComponent className="h-5 w-5 text-xl" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h4 className="text-base font-bold tracking-tight text-foreground transition-colors duration-200 group-hover:text-primary truncate">
+              {skill.name}
+            </h4>
+          </div>
         </div>
 
-        <SkillBar level={skill.level} />
+        {skill.description && (
+          <p className="mt-3.5 text-xs leading-relaxed text-muted-foreground line-clamp-2">
+            {skill.description}
+          </p>
+        )}
       </div>
-
-      {skill.description && (
-        <p className="mt-3.5 text-xs leading-relaxed text-muted-foreground line-clamp-2">
-          {skill.description}
-        </p>
-      )}
-    </div>
+    </motion.div>
   );
 }
 
@@ -168,13 +161,16 @@ export function Skills() {
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div
                   key={i}
-                  className="rounded-2xl border border-border bg-card p-5 shadow-soft h-[88px] flex flex-col justify-between"
+                  className="rounded-2xl border border-border bg-card/80 p-5 shadow-soft flex flex-col justify-between"
                 >
-                  <div className="flex justify-between items-center">
-                    <Skeleton className="h-4 w-20" />
-                    <Skeleton className="h-4 w-8" />
+                  <div className="flex items-center gap-3.5">
+                    <Skeleton className="h-11 w-11 rounded-xl shrink-0" />
+                    <div className="space-y-2 flex-1">
+                      <Skeleton className="h-4 w-24" />
+                      <Skeleton className="h-3 w-16 rounded-full" />
+                    </div>
                   </div>
-                  <Skeleton className="h-2 w-full rounded-full" />
+                  <Skeleton className="mt-3.5 h-3 w-full rounded" />
                 </div>
               ))}
             </div>

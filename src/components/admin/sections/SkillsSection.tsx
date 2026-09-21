@@ -10,6 +10,7 @@ import {
   Trash2,
   AlertCircle,
 } from "lucide-react";
+import { getSkillIcon, SKILL_ICON_NAMES } from "@/lib/skill-icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -76,7 +77,9 @@ export default function SkillsSection() {
   const [editingSkill, setEditingSkill] = useState<SkillItem | null>(null);
   const [skillName, setSkillName] = useState("");
   const [skillDesc, setSkillDesc] = useState("");
-  const [skillLevel, setSkillLevel] = useState("80");
+  const [skillIcon, setSkillIcon] = useState("Code");
+  const [skillBadge, setSkillBadge] = useState("Advanced");
+  const [skillLevel, setSkillLevel] = useState("90");
   const [skillCategory, setSkillCategory] = useState("Frontend");
   const [useCustomCategory, setUseCustomCategory] = useState(false);
   const [customCategoryName, setCustomCategoryName] = useState("");
@@ -176,7 +179,9 @@ export default function SkillsSection() {
     setEditingSkill(null);
     setSkillName("");
     setSkillDesc("");
-    setSkillLevel("80");
+    setSkillIcon("Code");
+    setSkillBadge("Advanced");
+    setSkillLevel("90");
     setSkillCategory(DEFAULT_CATEGORIES[0]);
     setUseCustomCategory(false);
     setCustomCategoryName("");
@@ -188,7 +193,9 @@ export default function SkillsSection() {
     setEditingSkill(s);
     setSkillName(s.name);
     setSkillDesc(s.description);
-    setSkillLevel(String(s.level));
+    setSkillIcon(s.icon || "Code");
+    setSkillBadge(s.badge || "Advanced");
+    setSkillLevel(String(s.level ?? 90));
     setSkillOrder(String(s.order));
     setSkillFormError(null);
 
@@ -214,16 +221,12 @@ export default function SkillsSection() {
       return;
     }
 
-    const numericLevel = Number(skillLevel);
-    if (isNaN(numericLevel) || numericLevel < 0 || numericLevel > 100) {
-      setSkillFormError("Level must be a number between 0 and 100.");
-      return;
-    }
-
     const data = {
       name: skillName,
       description: skillDesc,
-      level: numericLevel,
+      icon: skillIcon || "Code",
+      badge: skillBadge || "Advanced",
+      level: Number(skillLevel) || 90,
       category: finalCategory,
       order: Number(skillOrder) || 0,
     };
@@ -390,19 +393,24 @@ export default function SkillsSection() {
                             </button>
                           </div>
 
-                          <div className="flex flex-col flex-1 min-w-0">
-                            <div className="flex items-baseline gap-2">
-                              <span className="font-bold text-sm text-foreground">
-                                {skill.name}
-                              </span>
-                              <span className="text-[10px] font-semibold text-primary/80">
-                                {skill.level}% Proficiency
-                              </span>
-                            </div>
-                            <p className="text-xs text-muted-foreground mt-1 line-clamp-1 break-words">
-                              {skill.description}
-                            </p>
-                          </div>
+                          {(() => {
+                            const SkillIcon = getSkillIcon(skill.icon, skill.name);
+                            return (
+                              <div className="flex items-center gap-3 flex-1 min-w-0">
+                                <div className="h-9 w-9 rounded-xl bg-primary/10 border border-primary/20 grid place-items-center text-primary shrink-0">
+                                  <SkillIcon className="h-4 w-4 text-base" />
+                                </div>
+                                <div className="flex flex-col flex-1 min-w-0">
+                                  <span className="font-bold text-sm text-foreground">
+                                    {skill.name}
+                                  </span>
+                                  <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1 break-words">
+                                    {skill.description}
+                                  </p>
+                                </div>
+                              </div>
+                            );
+                          })()}
                         </div>
 
                         <div className="flex items-center gap-1 shrink-0">
@@ -468,7 +476,7 @@ export default function SkillsSection() {
               {editingSkill ? "Edit Skill" : "Add New Skill"}
             </DialogTitle>
             <DialogDescription className="text-sm text-muted-foreground">
-              Fill out the fields to add a skill to your toolkit.
+              Configure technical skill name, icon, category, and description.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSkillSubmit} className="space-y-4 mt-2">
@@ -478,30 +486,53 @@ export default function SkillsSection() {
                 <span>{skillFormError}</span>
               </div>
             )}
+            <div className="space-y-1">
+              <label className="text-xs font-semibold text-muted-foreground">
+                Skill Name
+              </label>
+              <Input
+                value={skillName}
+                onChange={(e) => setSkillName(e.target.value)}
+                placeholder="E.g. React, TypeScript, Node.js"
+                required
+                className="rounded-xl"
+              />
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-muted-foreground">
-                  Skill Name
+                  Skill Icon
                 </label>
-                <Input
-                  value={skillName}
-                  onChange={(e) => setSkillName(e.target.value)}
-                  placeholder="E.g. TypeScript"
-                  required
-                  className="rounded-xl"
-                />
+                <Select value={skillIcon} onValueChange={setSkillIcon}>
+                  <SelectTrigger className="w-full h-9 cursor-pointer rounded-xl">
+                    <SelectValue placeholder="Icon" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-56">
+                    {SKILL_ICON_NAMES.map((iconName) => {
+                      const IconComp = getSkillIcon(iconName);
+                      return (
+                        <SelectItem key={iconName} value={iconName}>
+                          <div className="flex items-center gap-2">
+                            <IconComp className="h-3.5 w-3.5 text-primary" />
+                            <span>{iconName}</span>
+                          </div>
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
               </div>
+
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-muted-foreground">
-                  Proficiency (0-100%)
+                  Sort Order
                 </label>
                 <Input
                   type="number"
-                  min="0"
-                  max="100"
-                  value={skillLevel}
-                  onChange={(e) => setSkillLevel(e.target.value)}
-                  required
+                  value={skillOrder}
+                  onChange={(e) => setSkillOrder(e.target.value)}
+                  placeholder="0"
                   className="rounded-xl"
                 />
               </div>

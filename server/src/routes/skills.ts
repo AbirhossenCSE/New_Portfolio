@@ -23,21 +23,12 @@ router.post(
   "/",
   authenticateToken,
   async (req: AuthRequest, res: Response): Promise<void> => {
-    const { name, description, level, category, order } = req.body;
+    const { name, description, icon, badge, level, category, order } = req.body;
 
-    if (!name || !description || level === undefined || !category) {
+    if (!name || !description || !category) {
       res.status(400).json({
-        error:
-          "Missing required fields. name, description, level, and category are required.",
+        error: "Missing required fields. name, description, and category are required.",
       });
-      return;
-    }
-
-    const numericLevel = Number(level);
-    if (isNaN(numericLevel) || numericLevel < 0 || numericLevel > 100) {
-      res
-        .status(400)
-        .json({ error: "level field must be a number between 0 and 100." });
       return;
     }
 
@@ -45,7 +36,9 @@ router.post(
       const newSkill = new Skill({
         name,
         description,
-        level: numericLevel,
+        icon: icon || "Code",
+        badge: badge || "Advanced",
+        level: level !== undefined ? Number(level) : 90,
         category,
         order: order ?? 0,
       });
@@ -67,20 +60,16 @@ router.put(
   authenticateToken,
   async (req: AuthRequest, res: Response): Promise<void> => {
     const { id } = req.params;
-    const { name, description, level, category, order } = req.body;
+    const { name, description, icon, badge, level, category, order } = req.body;
 
-    const updateFields: any = { name, description, category, order };
-
-    if (level !== undefined) {
-      const numericLevel = Number(level);
-      if (isNaN(numericLevel) || numericLevel < 0 || numericLevel > 100) {
-        res
-          .status(400)
-          .json({ error: "level field must be a number between 0 and 100." });
-        return;
-      }
-      updateFields.level = numericLevel;
-    }
+    const updateFields: any = {};
+    if (name !== undefined) updateFields.name = name;
+    if (description !== undefined) updateFields.description = description;
+    if (icon !== undefined) updateFields.icon = icon;
+    if (badge !== undefined) updateFields.badge = badge;
+    if (category !== undefined) updateFields.category = category;
+    if (order !== undefined) updateFields.order = Number(order);
+    if (level !== undefined) updateFields.level = Number(level);
 
     try {
       const updatedSkill = await Skill.findByIdAndUpdate(id, updateFields, {

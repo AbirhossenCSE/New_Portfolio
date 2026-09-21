@@ -23,7 +23,9 @@ export interface SkillItem {
   _id: string;
   name: string;
   description: string;
-  level: number;
+  icon?: string;
+  badge?: string;
+  level?: number;
   category: string;
   order: number;
 }
