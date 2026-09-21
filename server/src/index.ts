@@ -25,26 +25,46 @@ const PORT = process.env.PORT || 5000;
 // Security headers with Helmet
 app.use(helmet());
 
-// CORS configuration - only allow the specific frontend URL configured in environment variables
+// CORS configuration - support FRONTEND_URL env, comma-separated origins, wildcard, and localhost dev servers
 const frontendUrl = process.env.FRONTEND_URL;
-if (!frontendUrl) {
-  console.warn(
-    "Warning: FRONTEND_URL is not defined in the environment variables. CORS is set to restrict all requests.",
-  );
-}
+const allowedOrigins = frontendUrl
+  ? frontendUrl.split(",").map((url) => url.trim()).filter(Boolean)
+  : [];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, or server-to-server) or matching frontendUrl
-      if (!origin || (frontendUrl && origin === frontendUrl)) {
-        callback(null, true);
-      } else {
-        callback(null, false);
+      // Allow requests with no origin (like mobile apps, curl, or server-to-server)
+      if (!origin) {
+        return callback(null, true);
       }
+
+      // Allow if FRONTEND_URL is set to '*'
+      if (allowedOrigins.includes("*")) {
+        return callback(null, true);
+      }
+
+      // Always allow any localhost or 127.0.0.1 port for local development
+      const isLocalhost = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+      if (isLocalhost) {
+        return callback(null, true);
+      }
+
+      // Check if origin matches any allowed origin (ignoring trailing slash)
+      const originClean = origin.replace(/\/$/, "");
+      const isAllowed = allowedOrigins.some(
+        (allowed) => allowed.replace(/\/$/, "") === originClean,
+      );
+
+      if (isAllowed) {
+        return callback(null, true);
+      }
+
+      console.warn(`CORS blocked request from origin: ${origin}`);
+      callback(null, false);
     },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     credentials: true,
   }),
 );

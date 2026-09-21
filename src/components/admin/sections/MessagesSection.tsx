@@ -107,7 +107,7 @@ export default function MessagesSection() {
         return (
           <Badge
             variant="outline"
-            className="border-blue-500/30 bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 text-[10px]"
+            className="border-[#FF9933]/30 bg-[#FF9933]/10 text-[#FF9933] hover:bg-[#FF9933]/20 text-[10px]"
           >
             Unread
           </Badge>

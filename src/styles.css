@@ -63,8 +63,8 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.216 0.031 264.5);
 
-  --primary: oklch(0.546 0.245 262.9); /* #2563EB */
-  --primary-foreground: oklch(0.985 0 0);
+  --primary: #FF9933;
+  --primary-foreground: #FFFFFF;
 
   --secondary: oklch(0.968 0.007 247.9);
   --secondary-foreground: oklch(0.216 0.031 264.5);
@@ -72,7 +72,7 @@
   --muted: oklch(0.968 0.007 247.9);
   --muted-foreground: oklch(0.52 0.03 257.4);
 
-  --accent: oklch(0.715 0.128 215.2); /* #06B6D4 */
+  --accent: #FFB366;
   --accent-foreground: oklch(0.145 0.02 260);
 
   --destructive: oklch(0.577 0.245 27.325);
@@ -80,43 +80,43 @@
 
   --border: oklch(0.923 0.008 255.5);
   --input: oklch(0.923 0.008 255.5);
-  --ring: oklch(0.546 0.245 262.9);
+  --ring: #FF9933;
 
-  --chart-1: oklch(0.546 0.245 262.9);
-  --chart-2: oklch(0.715 0.128 215.2);
+  --chart-1: #FF9933;
+  --chart-2: #FFB366;
   --chart-3: oklch(0.398 0.07 227.4);
   --chart-4: oklch(0.828 0.189 84.4);
   --chart-5: oklch(0.769 0.188 70.1);
 
   --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.216 0.031 264.5);
-  --sidebar-primary: oklch(0.546 0.245 262.9);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-primary: #FF9933;
+  --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: oklch(0.968 0.007 247.9);
   --sidebar-accent-foreground: oklch(0.216 0.031 264.5);
   --sidebar-border: oklch(0.923 0.008 255.5);
-  --sidebar-ring: oklch(0.546 0.245 262.9);
+  --sidebar-ring: #FF9933;
 
   /* Custom design tokens */
   --gradient-primary: linear-gradient(
     135deg,
-    oklch(0.546 0.245 262.9),
-    oklch(0.715 0.128 215.2)
+    #FF9933,
+    #E67E22
   );
   --gradient-subtle: linear-gradient(
     180deg,
-    oklch(1 0 0 / 0) 0%,
-    oklch(0.546 0.245 262.9 / 0.04) 100%
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 153, 51, 0.07) 100%
   );
   --gradient-text: linear-gradient(
     120deg,
-    oklch(0.546 0.245 262.9),
-    oklch(0.6 0.15 230)
+    #FF9933,
+    #FFB84D
   );
   --shadow-soft:
     0 1px 2px oklch(0.216 0.031 264.5 / 0.04),
     0 8px 24px oklch(0.216 0.031 264.5 / 0.06);
-  --shadow-lift: 0 10px 40px -12px oklch(0.546 0.245 262.9 / 0.28);
+  --shadow-lift: 0 10px 40px -12px rgba(255, 153, 51, 0.35);
   --shadow-card:
     0 1px 3px oklch(0.216 0.031 264.5 / 0.05),
     0 12px 32px -12px oklch(0.216 0.031 264.5 / 0.12);
@@ -134,8 +134,8 @@
   --popover: oklch(0.24 0.03 264.5);
   --popover-foreground: oklch(0.97 0.005 247.9);
 
-  --primary: oklch(0.62 0.2 262.9);
-  --primary-foreground: oklch(0.99 0 0);
+  --primary: #FF9933;
+  --primary-foreground: #FFFFFF;
 
   --secondary: oklch(0.28 0.03 264.5);
   --secondary-foreground: oklch(0.97 0.005 247.9);
@@ -143,7 +143,7 @@
   --muted: oklch(0.28 0.03 264.5);
   --muted-foreground: oklch(0.7 0.03 257.4);
 
-  --accent: oklch(0.72 0.13 215.2);
+  --accent: #FFB366;
   --accent-foreground: oklch(0.16 0.02 260);
 
   --destructive: oklch(0.704 0.191 22.216);
@@ -151,24 +151,24 @@
 
   --border: oklch(1 0 0 / 0.09);
   --input: oklch(1 0 0 / 0.12);
-  --ring: oklch(0.62 0.2 262.9);
+  --ring: #FF9933;
 
   --sidebar: oklch(0.24 0.03 264.5);
   --sidebar-foreground: oklch(0.97 0.005 247.9);
-  --sidebar-primary: oklch(0.62 0.2 262.9);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-primary: #FF9933;
+  --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: oklch(0.28 0.03 264.5);
   --sidebar-accent-foreground: oklch(0.97 0.005 247.9);
   --sidebar-border: oklch(1 0 0 / 0.09);
-  --sidebar-ring: oklch(0.62 0.2 262.9);
+  --sidebar-ring: #FF9933;
 
   --gradient-subtle: linear-gradient(
     180deg,
-    oklch(0.19 0.028 264.5 / 0) 0%,
-    oklch(0.62 0.2 262.9 / 0.08) 100%
+    rgba(30, 27, 38, 0) 0%,
+    rgba(255, 153, 51, 0.12) 100%
   );
   --shadow-soft: 0 1px 2px oklch(0 0 0 / 0.3), 0 8px 24px oklch(0 0 0 / 0.35);
-  --shadow-lift: 0 10px 40px -12px oklch(0.62 0.2 262.9 / 0.4);
+  --shadow-lift: 0 10px 40px -12px rgba(255, 153, 51, 0.45);
   --shadow-card:
     0 1px 3px oklch(0 0 0 / 0.4), 0 12px 32px -12px oklch(0 0 0 / 0.45);
   --glass-bg: oklch(0.24 0.03 264.5 / 0.6);
