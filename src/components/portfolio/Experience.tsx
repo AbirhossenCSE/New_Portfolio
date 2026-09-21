@@ -50,7 +50,6 @@ const ExperienceTimelineItem = memo(function ExperienceTimelineItem({
     }
     if (!item.description) return [];
 
-    // Split by linebreaks, bullets (•), or sentence endings (. )
     const parsed = item.description
       .split(/(?:\r?\n|•|;\s*|\.\s+)/)
       .map((s) => s.trim())
@@ -64,16 +63,16 @@ const ExperienceTimelineItem = memo(function ExperienceTimelineItem({
     <div className="relative group">
       {/* Connecting gradient line */}
       {!isLast && (
-        <div className="absolute left-6 top-14 bottom-0 w-[2px] bg-gradient-to-b from-primary/80 via-primary/30 to-border/30" />
+        <div className="absolute left-[21px] sm:left-6 top-14 bottom-0 w-[2px] bg-gradient-to-b from-primary/80 via-primary/30 to-border/30" />
       )}
 
       {/* Timeline node marker */}
-      <div className="absolute left-4 top-6 w-4 h-4 bg-background border-2 border-primary rounded-full flex items-center justify-center transform transition-all duration-200 z-10 group-hover:scale-110">
+      <div className="absolute left-3.5 sm:left-4 top-6 w-4 h-4 bg-background border-2 border-primary rounded-full flex items-center justify-center transform transition-all duration-200 z-10 group-hover:scale-110">
         <div className="w-2 h-2 bg-primary rounded-full opacity-90 group-hover:opacity-100 transition-opacity duration-200" />
       </div>
 
       {/* Main content card with subtle shadow */}
-      <div className="ml-12 mb-6">
+      <div className="ml-9 sm:ml-12 mb-6">
         <div
           className={`overflow-hidden rounded-xl border bg-card/90 backdrop-blur-sm transition-all duration-200 ${
             expanded
@@ -85,37 +84,37 @@ const ExperienceTimelineItem = memo(function ExperienceTimelineItem({
           <button
             id={headerId}
             type="button"
-            className="w-full text-left p-5 sm:p-6 cursor-pointer hover:bg-muted/40 transition-colors duration-200 rounded-t-xl flex items-start justify-between gap-4"
+            className="w-full text-left p-4 sm:p-6 cursor-pointer hover:bg-muted/40 transition-colors duration-200 rounded-t-xl flex items-start justify-between gap-3 sm:gap-4"
             onClick={() => onToggle(itemId)}
             aria-expanded={expanded}
             aria-controls={contentId}
           >
-            <div className="flex items-start gap-3.5 flex-1 min-w-0">
-              <div className="p-2.5 bg-primary/10 text-primary rounded-lg shrink-0 mt-0.5 border border-primary/20">
+            <div className="flex items-start gap-3 sm:gap-3.5 flex-1 min-w-0">
+              <div className="p-2 sm:p-2.5 bg-primary/10 text-primary rounded-lg shrink-0 mt-0.5 border border-primary/20">
                 <Briefcase className="w-4 h-4" />
               </div>
 
               <div className="space-y-1 flex-1 min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="text-base sm:text-lg font-semibold text-foreground tracking-tight truncate">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground tracking-tight leading-snug break-words">
                     {item.role}
                   </h3>
                   {item.current && (
-                    <Badge className="bg-primary/15 text-primary border-primary/30 text-[11px] px-2 py-0.5 font-medium">
-                      <Sparkles className="w-3 h-3 mr-1 inline-block" /> Current
+                    <Badge className="bg-primary/15 text-primary border-primary/30 text-[10px] sm:text-[11px] px-2 py-0.5 font-medium">
+                      <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1 inline-block" /> Current
                     </Badge>
                   )}
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2.5 pt-0.5">
-                  <span className="inline-flex items-center text-xs font-medium text-muted-foreground">
-                    <Building2 className="w-3.5 h-3.5 mr-1 text-primary/80 inline-block" />
+                <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                  <span className="inline-flex items-center text-[11px] sm:text-xs font-medium text-muted-foreground break-words">
+                    <Building2 className="w-3.5 h-3.5 mr-1 text-primary/80 shrink-0 inline-block" />
                     {item.company}
                   </span>
-                  <span className="text-xs text-border">•</span>
+                  <span className="text-xs text-border hidden xs:inline">•</span>
                   <Badge
                     variant="outline"
-                    className="text-xs px-2.5 py-0.5 border-border/70 text-muted-foreground bg-muted/20 font-medium"
+                    className="text-[11px] sm:text-xs px-2 sm:px-2.5 py-0.5 border-border/70 text-muted-foreground bg-muted/20 font-medium"
                   >
                     <Calendar className="w-3 h-3 mr-1 inline-block text-primary/70" />
                     {item.duration}
@@ -129,7 +128,7 @@ const ExperienceTimelineItem = memo(function ExperienceTimelineItem({
                 expanded ? "rotate-180 text-primary" : ""
               }`}
             >
-              <ChevronDown className="w-5 h-5" />
+              <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
           </button>
 
@@ -139,13 +138,13 @@ const ExperienceTimelineItem = memo(function ExperienceTimelineItem({
               id={contentId}
               role="region"
               aria-labelledby={headerId}
-              className="px-5 sm:px-6 pb-6 pt-3 border-t border-border/30 space-y-4 animate-in fade-in duration-200"
+              className="px-4 sm:px-6 pb-5 sm:pb-6 pt-3 border-t border-border/30 space-y-4 animate-in fade-in duration-200"
             >
               <ul className="space-y-2.5">
                 {bulletPoints.map((pt, idx) => (
-                  <li key={idx} className="flex items-start gap-3 group/pt">
+                  <li key={idx} className="flex items-start gap-2.5 sm:gap-3 group/pt">
                     <span className="w-1.5 h-1.5 bg-primary/80 rounded-full mt-2 shrink-0 group-hover/pt:scale-125 transition-transform" />
-                    <span className="text-sm leading-relaxed text-muted-foreground">
+                    <span className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
                       {pt}.
                     </span>
                   </li>
@@ -153,12 +152,12 @@ const ExperienceTimelineItem = memo(function ExperienceTimelineItem({
               </ul>
 
               {item.skills && item.skills.length > 0 && (
-                <div className="pt-3 flex flex-wrap gap-2 border-t border-border/30">
+                <div className="pt-3 flex flex-wrap gap-1.5 sm:gap-2 border-t border-border/30">
                   {item.skills.map((skill, sIdx) => (
                     <Badge
                       key={sIdx}
                       variant="secondary"
-                      className="text-xs font-medium bg-secondary/50 hover:bg-secondary transition-colors"
+                      className="text-[10px] sm:text-xs font-medium bg-secondary/50 hover:bg-secondary transition-colors"
                     >
                       <CheckCircle2 className="w-3 h-3 mr-1 text-primary inline-block" />
                       {skill}
@@ -223,7 +222,7 @@ export function Experience() {
           <div className="relative mt-8 md:mt-10">
             <div className="space-y-6">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="ml-12 relative">
+                <div key={i} className="ml-9 sm:ml-12 relative">
                   <Skeleton className="h-28 w-full rounded-xl" />
                 </div>
               ))}

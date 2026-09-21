@@ -5,7 +5,6 @@ import { authenticateToken, AuthRequest } from "../middleware/auth";
 const router = Router();
 
 // GET / - Public endpoint to retrieve all experiences
-// Sorted by custom order ascending, then by createdAt descending
 router.get("/", async (req, res: Response): Promise<void> => {
   try {
     const experiences = await Experience.find().sort({
@@ -26,7 +25,7 @@ router.post(
   "/",
   authenticateToken,
   async (req: AuthRequest, res: Response): Promise<void> => {
-    const { role, company, duration, current, description, order } = req.body;
+    const { role, company, duration, current, description, responsibilities, skills, order } = req.body;
 
     if (!role || !company || !duration || !description) {
       res.status(400).json({
@@ -43,6 +42,8 @@ router.post(
         duration,
         current: current ?? false,
         description,
+        responsibilities: Array.isArray(responsibilities) ? responsibilities : [],
+        skills: Array.isArray(skills) ? skills : [],
         order: order ?? 0,
       });
 
@@ -63,12 +64,12 @@ router.put(
   authenticateToken,
   async (req: AuthRequest, res: Response): Promise<void> => {
     const { id } = req.params;
-    const { role, company, duration, current, description, order } = req.body;
+    const { role, company, duration, current, description, responsibilities, skills, order } = req.body;
 
     try {
       const updatedExperience = await Experience.findByIdAndUpdate(
         id,
-        { role, company, duration, current, description, order },
+        { role, company, duration, current, description, responsibilities, skills, order },
         { new: true, runValidators: true },
       );
 

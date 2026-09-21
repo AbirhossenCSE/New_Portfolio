@@ -6,6 +6,8 @@ export interface IExperience extends Document {
   duration: string;
   current: boolean;
   description: string;
+  responsibilities?: string[];
+  skills?: string[];
   order: number;
   createdAt: Date;
   updatedAt: Date;
@@ -36,6 +38,14 @@ const experienceSchema = new Schema<IExperience>(
       type: String,
       required: true,
       trim: true,
+    },
+    responsibilities: {
+      type: [String],
+      default: [],
+    },
+    skills: {
+      type: [String],
+      default: [],
     },
     order: {
       type: Number,

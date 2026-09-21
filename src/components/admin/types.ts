@@ -37,6 +37,8 @@ export interface ExperienceItem {
   duration: string;
   current: boolean;
   description: string;
+  responsibilities?: string[];
+  skills?: string[];
   order: number;
 }
 

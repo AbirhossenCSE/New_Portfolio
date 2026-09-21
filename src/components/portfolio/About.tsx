@@ -233,10 +233,10 @@ export function About() {
             {/* Action Bar */}
             {profile.resumeUrl && (
               <Reveal delay={0.25}>
-                <div className="pt-3 flex flex-wrap items-center gap-4">
+                <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                   <Button
                     asChild
-                    className="cursor-pointer rounded-xl bg-gradient-primary text-primary-foreground shadow-soft hover:shadow-lift transition-all duration-300 px-6 py-5 font-semibold text-sm"
+                    className="w-full sm:w-auto justify-center cursor-pointer rounded-xl bg-gradient-primary text-primary-foreground shadow-soft hover:shadow-lift transition-all duration-300 px-6 py-5 font-semibold text-sm"
                   >
                     <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer">
                       <Download className="h-4 w-4 mr-2" /> Download Resume
@@ -246,7 +246,7 @@ export function About() {
                   <Button
                     asChild
                     variant="outline"
-                    className="cursor-pointer rounded-xl border-border hover:border-primary/50 hover:text-primary transition-all duration-300 px-6 py-5 font-semibold text-sm"
+                    className="w-full sm:w-auto justify-center cursor-pointer rounded-xl border-border hover:border-primary/50 hover:text-primary transition-all duration-300 px-6 py-5 font-semibold text-sm"
                   >
                     <a href="#contact">
                       Get In Touch <ArrowRight className="h-4 w-4 ml-2" />

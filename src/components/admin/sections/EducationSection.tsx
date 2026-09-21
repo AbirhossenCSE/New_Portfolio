@@ -9,6 +9,7 @@ import {
   Edit,
   Trash2,
   AlertCircle,
+  HelpCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -472,16 +473,20 @@ export default function EducationSection() {
             </div>
             <div className="space-y-1">
               <label className="text-xs font-semibold text-muted-foreground">
-                Milestone Description
+                Description / Key Achievements (One per line)
               </label>
               <Textarea
                 value={eduDesc}
                 onChange={(e) => setEduDesc(e.target.value)}
-                placeholder="Major academic achievements, CGPA, theses..."
+                placeholder={`Graduated with First Class Honors / High Distinction\nSpecialized in Software Engineering and Distributed Systems\nPublished thesis on Machine Learning Optimization`}
                 rows={4}
                 required
-                className="rounded-xl"
+                className="rounded-xl text-sm font-sans"
               />
+              <p className="text-[11px] text-muted-foreground flex items-center gap-1 pt-1">
+                <HelpCircle className="w-3 h-3 text-primary shrink-0" />
+                Write each achievement or detail on a new line to render them as clean bullet points on your website.
+              </p>
             </div>
             <DialogFooter className="pt-4">
               <Button

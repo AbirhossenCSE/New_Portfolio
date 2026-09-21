@@ -8,6 +8,7 @@ import {
   Edit,
   Trash2,
   AlertCircle,
+  HelpCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -58,6 +59,7 @@ export default function ExperienceSection() {
   const [expDuration, setExpDuration] = useState("");
   const [expCurrent, setExpCurrent] = useState(false);
   const [expDesc, setExpDesc] = useState("");
+  const [expSkills, setExpSkills] = useState("");
   const [expOrder, setExpOrder] = useState("0");
   const [expFormError, setExpFormError] = useState<string | null>(null);
 
@@ -123,6 +125,7 @@ export default function ExperienceSection() {
     setExpDuration("");
     setExpCurrent(false);
     setExpDesc("");
+    setExpSkills("");
     setExpOrder("0");
     setExpFormError(null);
   };
@@ -133,7 +136,12 @@ export default function ExperienceSection() {
     setExpCompany(e.company);
     setExpDuration(e.duration);
     setExpCurrent(e.current);
-    setExpDesc(e.description);
+    setExpDesc(
+      e.responsibilities && e.responsibilities.length > 0
+        ? e.responsibilities.join("\n")
+        : e.description
+    );
+    setExpSkills(e.skills ? e.skills.join(", ") : "");
     setExpOrder(String(e.order));
     setExpFormError(null);
     setIsExperienceDialogOpen(true);
@@ -142,9 +150,19 @@ export default function ExperienceSection() {
   const handleExperienceSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!expRole || !expCompany || !expDuration || !expDesc) {
-      setExpFormError("Role, company, duration, and description are required.");
+      setExpFormError("Role, company, duration, and details are required.");
       return;
     }
+
+    const parsedResponsibilities = expDesc
+      .split(/\r?\n/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const parsedSkills = expSkills
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
 
     const data = {
       role: expRole,
@@ -152,6 +170,8 @@ export default function ExperienceSection() {
       duration: expDuration,
       current: expCurrent,
       description: expDesc,
+      responsibilities: parsedResponsibilities,
+      skills: parsedSkills,
       order: Number(expOrder) || 0,
     };
 
@@ -170,7 +190,7 @@ export default function ExperienceSection() {
           <div>
             <h2 className="text-xl font-bold tracking-tight">Work History</h2>
             <p className="text-sm text-muted-foreground">
-              Manage and structure your past and present employment roles
+              Manage and structure your professional employment entries and key points
             </p>
           </div>
         </div>
@@ -225,7 +245,7 @@ export default function ExperienceSection() {
                   <TableHead className="w-[180px]">
                     Employment Duration
                   </TableHead>
-                  <TableHead>Key Responsibilities</TableHead>
+                  <TableHead>Key Responsibilities & Skills</TableHead>
                   <TableHead className="w-[120px] text-right">
                     Actions
                   </TableHead>
@@ -260,9 +280,22 @@ export default function ExperienceSection() {
                       </span>
                     </TableCell>
                     <TableCell className="align-top py-4 max-w-sm">
-                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-1.5">
                         {exp.description}
                       </p>
+                      {exp.skills && exp.skills.length > 0 && (
+                        <div className="flex flex-wrap gap-1">
+                          {exp.skills.map((skill, idx) => (
+                            <Badge
+                              key={idx}
+                              variant="outline"
+                              className="text-[10px] px-1.5 py-0 bg-primary/5 text-primary border-primary/20"
+                            >
+                              {skill}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
                     </TableCell>
                     <TableCell className="align-middle text-right">
                       <div className="flex items-center justify-end gap-1.5">
@@ -324,13 +357,13 @@ export default function ExperienceSection() {
         open={isExperienceDialogOpen}
         onOpenChange={setIsExperienceDialogOpen}
       >
-        <DialogContent className="max-w-md rounded-2xl border-border bg-card/95 backdrop-blur-xl">
+        <DialogContent className="max-w-lg rounded-2xl border-border bg-card/95 backdrop-blur-xl">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold">
               {editingExperience ? "Edit Experience" : "Add New Experience"}
             </DialogTitle>
             <DialogDescription className="text-sm text-muted-foreground">
-              Fill out the fields to document a professional role.
+              Document key details, responsibilities (bullet points), and skills.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleExperienceSubmit} className="space-y-4 mt-2">
@@ -343,7 +376,7 @@ export default function ExperienceSection() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-muted-foreground">
-                  Company
+                  Company Name
                 </label>
                 <Input
                   value={expCompany}
@@ -355,12 +388,12 @@ export default function ExperienceSection() {
               </div>
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-muted-foreground">
-                  Role / Title
+                  Role Title
                 </label>
                 <Input
                   value={expRole}
                   onChange={(e) => setExpRole(e.target.value)}
-                  placeholder="E.g. Frontend Developer"
+                  placeholder="E.g. Senior Frontend Developer"
                   required
                   className="rounded-xl"
                 />
@@ -369,12 +402,12 @@ export default function ExperienceSection() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-muted-foreground">
-                  Duration string
+                  Duration (e.g., 10.2022—Present)
                 </label>
                 <Input
                   value={expDuration}
                   onChange={(e) => setExpDuration(e.target.value)}
-                  placeholder="E.g. May 2025 – Present"
+                  placeholder="E.g. 10.2022—Present"
                   required
                   className="rounded-xl"
                 />
@@ -392,6 +425,7 @@ export default function ExperienceSection() {
                 />
               </div>
             </div>
+
             <div className="flex items-center gap-2 py-1">
               <input
                 type="checkbox"
@@ -407,19 +441,42 @@ export default function ExperienceSection() {
                 This is my current employment role
               </label>
             </div>
+
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-muted-foreground">
-                Job Description
-              </label>
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-semibold text-muted-foreground">
+                  Responsibilities / Key Points (One per line)
+                </label>
+              </div>
               <Textarea
                 value={expDesc}
                 onChange={(e) => setExpDesc(e.target.value)}
-                placeholder="Highlight your work and contributions..."
-                rows={4}
+                placeholder={`Architect scalable frontend solutions using Next.js\nLead development of React applications with TypeScript\nMentor junior developers and conduct code reviews`}
+                rows={5}
                 required
+                className="rounded-xl text-sm font-sans"
+              />
+              <p className="text-[11px] text-muted-foreground flex items-center gap-1 pt-1">
+                <HelpCircle className="w-3 h-3 text-primary shrink-0" />
+                Write each key responsibility on a new line to display them as bullet points on your website.
+              </p>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-semibold text-muted-foreground">
+                Technologies / Skills (Comma-separated)
+              </label>
+              <Input
+                value={expSkills}
+                onChange={(e) => setExpSkills(e.target.value)}
+                placeholder="E.g. React, TypeScript, Next.js, Tailwind CSS, GraphQL"
                 className="rounded-xl"
               />
+              <p className="text-[11px] text-muted-foreground pt-0.5">
+                Comma-separated list of tech tags to display as badges under this role.
+              </p>
             </div>
+
             <DialogFooter className="pt-4">
               <Button
                 type="button"

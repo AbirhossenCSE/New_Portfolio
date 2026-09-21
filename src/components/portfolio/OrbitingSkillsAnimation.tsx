@@ -286,7 +286,7 @@ export function OrbitingSkillsAnimation({
 
   return (
     <div
-      className="relative w-full aspect-square max-w-[480px] mx-auto flex items-center justify-center select-none"
+      className="relative w-full aspect-square max-w-[480px] mx-auto flex items-center justify-center select-none scale-[0.72] xs:scale-[0.88] sm:scale-100 transform-gpu my-[-40px] xs:my-[-20px] sm:my-0 transition-transform duration-300"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
