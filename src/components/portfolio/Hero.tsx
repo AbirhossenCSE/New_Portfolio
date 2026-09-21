@@ -16,6 +16,8 @@ import { AnimatedCounter } from "./AnimatedCounter";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 
+import { OrbitingSkillsAnimation } from "./OrbitingSkillsAnimation";
+
 function useTypewriter(words: string[]) {
   const [text, setText] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
@@ -212,43 +214,35 @@ export function Hero() {
           </div>
         </motion.div>
 
-        {/* Portrait */}
+        {/* Orbiting Skills & Portrait Visual */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto w-full max-w-sm"
+          className="relative mx-auto w-full flex items-center justify-center py-6"
         >
-          <div className="absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-primary opacity-20 blur-2xl" />
-          <div className="relative overflow-hidden rounded-[2rem] border border-border bg-card p-2 shadow-card">
-            <img
-              src={profile.homeImage}
-              alt={`${profile.name} — Full-Stack Developer`}
-              loading="eager"
-              className="h-full w-full rounded-[1.6rem] object-cover"
-            />
-          </div>
+          <OrbitingSkillsAnimation />
 
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -8, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -left-5 top-10 rounded-2xl glass px-4 py-3 shadow-soft"
+            className="absolute -left-2 sm:left-0 top-6 rounded-2xl glass px-3.5 py-2.5 shadow-soft z-30"
           >
-            <p className="text-2xl font-extrabold text-foreground">
+            <p className="text-xl font-extrabold text-foreground">
               <AnimatedCounter to={6} suffix="+" />
             </p>
-            <p className="text-xs text-muted-foreground">Projects</p>
+            <p className="text-[11px] font-medium text-muted-foreground">Projects Done</p>
           </motion.div>
 
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -right-4 bottom-10 rounded-2xl glass px-4 py-3 shadow-soft"
+            className="absolute -right-2 sm:right-0 bottom-6 rounded-2xl glass px-3.5 py-2.5 shadow-soft z-30"
           >
-            <p className="text-2xl font-extrabold text-foreground">
+            <p className="text-xl font-extrabold text-foreground">
               <AnimatedCounter to={2} suffix="+" />
             </p>
-            <p className="text-xs text-muted-foreground">Companies</p>
+            <p className="text-[11px] font-medium text-muted-foreground">Years Experience</p>
           </motion.div>
         </motion.div>
       </div>

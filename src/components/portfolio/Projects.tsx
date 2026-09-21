@@ -189,7 +189,7 @@ export function Projects() {
   };
 
   return (
-    <section id="projects" ref={sectionRef} className="relative py-20 md:py-28">
+    <section id="projects" ref={sectionRef} className="relative py-12 md:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Featured Projects"
@@ -199,7 +199,7 @@ export function Projects() {
 
         {/* Loading State */}
         {isLoading && (
-          <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
+          <div className="mt-8 md:mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
@@ -229,7 +229,7 @@ export function Projects() {
 
         {/* Error State */}
         {error && (
-          <div className="mt-16 flex flex-col items-center justify-center rounded-2xl border border-destructive/20 bg-destructive/5 p-8 text-center max-w-lg mx-auto">
+          <div className="mt-8 md:mt-10 flex flex-col items-center justify-center rounded-2xl border border-destructive/20 bg-destructive/5 p-8 text-center max-w-lg mx-auto">
             <AlertCircle className="h-10 w-10 text-destructive mb-3" />
             <h3 className="text-lg font-bold text-foreground">
               Unable to load projects
@@ -250,7 +250,7 @@ export function Projects() {
 
         {/* Success State */}
         {!isLoading && !error && projects.length === 0 && (
-          <div className="mt-16 text-center text-muted-foreground">
+          <div className="mt-8 md:mt-10 text-center text-muted-foreground">
             No projects found in database. Check back later or log in to the
             admin panel to add them.
           </div>
@@ -258,7 +258,7 @@ export function Projects() {
 
         {!isLoading && !error && projects.length > 0 && (
           <div className="space-y-12">
-            <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
+            <div className="mt-8 md:mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
               {visibleProjects.map((project, i) => {
                 const isLastItemAndOdd =
                   isOdd && i === visibleProjects.length - 1;

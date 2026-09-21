@@ -35,7 +35,7 @@ export function Experience() {
   });
 
   return (
-    <section id="experience" className="relative py-20 md:py-28">
+    <section id="experience" className="relative py-12 md:py-16">
       <div className="absolute inset-0 -z-10 bg-gradient-subtle" />
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <SectionHeading
@@ -46,7 +46,7 @@ export function Experience() {
 
         {/* Loading State */}
         {isLoading && (
-          <div className="relative mt-14">
+          <div className="relative mt-8 md:mt-10">
             <div className="absolute left-4 top-2 h-full w-px bg-border md:left-1/2 md:-translate-x-1/2" />
             <div className="space-y-10">
               {[1, 2].map((i) => (
@@ -102,14 +102,14 @@ export function Experience() {
 
         {/* Success State */}
         {!isLoading && !error && experiences.length === 0 && (
-          <div className="mt-14 text-center text-muted-foreground">
+          <div className="mt-8 md:mt-10 text-center text-muted-foreground">
             No professional experience listed in database. Check back later or
             log in to the admin panel to add them.
           </div>
         )}
 
         {!isLoading && !error && experiences.length > 0 && (
-          <div className="relative mt-14">
+          <div className="relative mt-8 md:mt-10">
             <div className="absolute left-4 top-2 h-full w-px bg-border md:left-1/2 md:-translate-x-1/2" />
 
             <div className="space-y-10">

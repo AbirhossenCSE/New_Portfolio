@@ -128,7 +128,7 @@ export function Skills() {
     }));
 
   return (
-    <section id="skills" className="relative py-20 md:py-28">
+    <section id="skills" className="relative py-12 md:py-16">
       <div className="absolute inset-0 -z-10 bg-gradient-subtle" />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
@@ -139,7 +139,7 @@ export function Skills() {
 
         {/* Loading State */}
         {isLoading && (
-          <div className="mt-14 space-y-8 animate-pulse">
+          <div className="mt-8 md:mt-10 space-y-8 animate-pulse">
             {/* Skeleton Tabs List */}
             <div className="flex flex-wrap gap-2 justify-center max-w-2xl mx-auto p-1.5 bg-muted/20 border border-border/10 rounded-2xl h-12 items-center">
               {[1, 2, 3, 4, 5].map((i) => (
@@ -179,7 +179,7 @@ export function Skills() {
 
         {/* Error State */}
         {error && (
-          <div className="mt-14 flex flex-col items-center justify-center rounded-2xl border border-destructive/20 bg-destructive/5 p-8 text-center max-w-lg mx-auto">
+          <div className="mt-8 md:mt-10 flex flex-col items-center justify-center rounded-2xl border border-destructive/20 bg-destructive/5 p-8 text-center max-w-lg mx-auto">
             <AlertCircle className="h-10 w-10 text-destructive mb-3" />
             <h3 className="text-lg font-bold text-foreground">
               Unable to load skills
@@ -200,7 +200,7 @@ export function Skills() {
 
         {/* Empty State */}
         {!isLoading && !error && categories.length === 0 && (
-          <div className="mt-14 text-center text-muted-foreground">
+          <div className="mt-8 md:mt-10 text-center text-muted-foreground">
             No skills found in database. Check back later or log in to the admin
             panel to add them.
           </div>
@@ -208,7 +208,7 @@ export function Skills() {
 
         {/* Success State */}
         {!isLoading && !error && categories.length > 0 && (
-          <div className="mt-14">
+          <div className="mt-8 md:mt-10">
             <Tabs
               defaultValue={categories[0].category}
               className="w-full space-y-8"

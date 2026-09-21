@@ -85,7 +85,7 @@ export function Education() {
   }
 
   return (
-    <section id="education" className="relative py-20 md:py-28">
+    <section id="education" className="relative py-12 md:py-16">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Education"
@@ -93,7 +93,7 @@ export function Education() {
           description="The academic foundation behind my engineering mindset."
         />
 
-        <div className="relative mt-14 pl-8 sm:pl-10">
+        <div className="relative mt-8 md:mt-10 pl-8 sm:pl-10">
           <div className="absolute left-2.5 top-2 h-full w-px bg-border sm:left-3" />
 
           <div className="space-y-8">

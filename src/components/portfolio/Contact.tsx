@@ -102,7 +102,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-20 md:py-28">
+    <section id="contact" className="relative py-12 md:py-16">
       <div className="absolute inset-0 -z-10 bg-gradient-subtle" />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
@@ -111,7 +111,7 @@ export function Contact() {
           description="Feel free to reach out to me for collaborations, projects, or just a friendly hello. I'd love to connect with you!"
         />
 
-        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10">
+        <div className="mt-8 md:mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10">
           {/* Left: contact info */}
           <Reveal>
             <div className="flex h-full flex-col rounded-3xl border border-border bg-card p-7 shadow-card sm:p-8">
