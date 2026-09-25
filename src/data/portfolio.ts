@@ -14,7 +14,7 @@ export const profile = {
     "Passionate web developer with a degree in Computer Science & Engineering and hands-on experience in developing dynamic web applications.",
   availability: "Available for Full-time & Freelance",
   resumeUrl:
-    "https://drive.google.com/uc?export=download&id=1MW35NxWfy-aElkr7o0uS_iPXPgkL3cSZ",
+    "https://drive.google.com/uc?export=download&id=19yM0U1FIdhNjq0wRs-zD4YFun2J7Lg25",
   homeImage: abirHome,
   aboutImage: abirAbout,
   email: "abirhossenkst@gmail.com",

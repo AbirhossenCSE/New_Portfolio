@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Moon, Sun, X } from "lucide-react";
-import { navItems, profile } from "@/data/portfolio";
+import { navItems, profile as staticProfile } from "@/data/portfolio";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import { useProfile } from "@/hooks/useProfile";
 import { useTheme } from "@/hooks/useTheme";
 
 const ids = navItems.map((n) => n.id);
@@ -12,6 +13,9 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const active = useActiveSection(ids);
   const { theme, toggle } = useTheme();
+  const { data: profileData } = useProfile();
+
+  const resumeUrl = profileData?.resumeUrl || staticProfile.resumeUrl;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -90,7 +94,7 @@ export function Navbar() {
           </button>
 
           <a
-            href={profile.resumeUrl}
+            href={resumeUrl}
             target="_blank"
             rel="noreferrer"
             className="hidden rounded-xl bg-gradient-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5 md:inline-flex"
@@ -134,7 +138,7 @@ export function Navbar() {
               ))}
               <li>
                 <a
-                  href={profile.resumeUrl}
+                  href={resumeUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="mt-1 block rounded-xl bg-gradient-primary px-4 py-3 text-center text-sm font-semibold text-primary-foreground"
