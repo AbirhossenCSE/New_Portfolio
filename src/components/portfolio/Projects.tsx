@@ -6,6 +6,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { MagicContainer } from "@/components/ui/MagicContainer";
 import { cn } from "@/lib/utils";
 
 interface ProjectItem {
@@ -89,102 +90,104 @@ export function Projects() {
     isFullWidth: boolean = false,
   ) => {
     return (
-      <article
-        className={cn(
-          "group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-card transition-all duration-300 hover:-translate-y-2 hover:shadow-lift relative",
-          isFullWidth ? "md:flex-row md:items-stretch" : "",
-        )}
-      >
-        {/* Image Container with Zoom effect */}
-        <div
+      <MagicContainer className="h-full">
+        <article
           className={cn(
-            "relative aspect-[16/10] overflow-hidden rounded-t-3xl border-b border-border shrink-0",
-            isFullWidth
-              ? "md:aspect-auto md:w-1/2 md:rounded-tr-none md:rounded-l-3xl md:border-b-0 md:border-r"
-              : "",
+            "group flex h-full flex-col overflow-hidden rounded-[calc(1.5rem-1px)] border-0 bg-card shadow-card relative",
+            isFullWidth ? "md:flex-row md:items-stretch" : "",
           )}
         >
-          <img
-            src={project.image}
-            alt={project.title}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-          <a
-            href={project.live}
-            target="_blank"
-            rel="noreferrer"
-            className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full glass px-3 py-1.5 text-xs font-semibold text-foreground opacity-0 shadow-soft transition-opacity duration-300 group-hover:opacity-100"
+          {/* Image Container with Zoom effect */}
+          <div
+            className={cn(
+              "relative aspect-[16/10] overflow-hidden rounded-t-[23px] shrink-0",
+              isFullWidth
+                ? "md:aspect-auto md:w-1/2 md:rounded-tr-none md:rounded-l-[23px]"
+                : "",
+            )}
           >
-            View Live <ArrowUpRight className="h-3.5 w-3.5" />
-          </a>
-        </div>
-
-        {/* Content Container */}
-        <div className="flex flex-1 flex-col p-6 justify-between">
-          <div className="flex-1">
-            {/* Featured / Order indicator */}
-            <div className="flex items-center gap-2">
-              {project.featured && (
-                <span className="rounded-full bg-gradient-primary px-2.5 py-0.5 text-[10px] font-bold text-primary-foreground">
-                  Featured
-                </span>
-              )}
-              <span className="text-xs font-semibold text-primary">
-                Project {String(index + 1).padStart(2, "0")}
-              </span>
-            </div>
-
-            <h3
-              className={cn(
-                "mt-3 text-xl font-bold text-foreground transition-colors group-hover:text-primary leading-tight",
-                isFullWidth ? "md:text-2xl" : "",
-              )}
+            <img
+              src={project.image}
+              alt={project.title}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noreferrer"
+              className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full glass px-3 py-1.5 text-xs font-semibold text-foreground opacity-0 shadow-soft transition-opacity duration-300 group-hover:opacity-100"
             >
-              {project.title}
-            </h3>
-            <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground line-clamp-3">
-              {project.description}
-            </p>
+              View Live <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
           </div>
 
-          <div>
-            {/* Tech stack */}
-            <div className="mt-5 flex flex-wrap gap-1.5">
-              {project.tech.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full border border-border bg-secondary/40 px-2.5 py-0.5 text-[10px] font-medium text-secondary-foreground"
-                >
-                  {t}
+          {/* Content Container */}
+          <div className="flex flex-1 flex-col p-6 justify-between">
+            <div className="flex-1">
+              {/* Featured / Order indicator */}
+              <div className="flex items-center gap-2">
+                {project.featured && (
+                  <span className="rounded-full bg-gradient-primary px-2.5 py-0.5 text-[10px] font-bold text-primary-foreground">
+                    Featured
+                  </span>
+                )}
+                <span className="text-xs font-semibold text-primary">
+                  Project {String(index + 1).padStart(2, "0")}
                 </span>
-              ))}
+              </div>
+
+              <h3
+                className={cn(
+                  "mt-3 text-xl font-bold text-foreground transition-colors group-hover:text-primary leading-tight",
+                  isFullWidth ? "md:text-2xl" : "",
+                )}
+              >
+                {project.title}
+              </h3>
+              <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground line-clamp-3">
+                {project.description}
+              </p>
             </div>
 
-            {/* Actions */}
-            <div className="mt-6 flex items-center gap-3">
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-primary py-2.5 text-xs font-semibold text-primary-foreground shadow-soft transition-all hover:shadow-lift"
-              >
-                Live Demo
-                <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-card py-2.5 text-xs font-semibold text-foreground shadow-soft transition-all hover:border-primary/40 hover:text-primary"
-              >
-                <Github className="h-3.5 w-3.5" />
-                GitHub
-              </a>
+            <div>
+              {/* Tech stack */}
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-border bg-secondary/40 px-2.5 py-0.5 text-[10px] font-medium text-secondary-foreground"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              {/* Actions */}
+              <div className="mt-6 flex items-center gap-3">
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-primary py-2.5 text-xs font-semibold text-primary-foreground shadow-soft transition-all hover:shadow-lift"
+                >
+                  Live Demo
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-card py-2.5 text-xs font-semibold text-foreground shadow-soft transition-all hover:border-primary/40 hover:text-primary"
+                >
+                  <Github className="h-3.5 w-3.5" />
+                  GitHub
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      </article>
+        </article>
+      </MagicContainer>
     );
   };
 

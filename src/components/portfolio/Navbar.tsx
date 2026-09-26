@@ -30,16 +30,14 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "py-2.5" : "py-4"
-      }`}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "py-2.5" : "py-4"
+        }`}
     >
       <nav
-        className={`mx-4 sm:mx-6 xl:mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-2xl px-4 transition-all duration-300 sm:px-6 ${
-          scrolled
+        className={`mx-4 sm:mx-6 xl:mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-2xl px-4 transition-all duration-300 sm:px-6 ${scrolled
             ? "glass py-2.5 shadow-soft"
             : "border border-transparent bg-transparent py-3"
-        }`}
+          }`}
       >
         <button
           onClick={() => scrollTo("home")}
@@ -59,11 +57,10 @@ export function Navbar() {
             <li key={item.id}>
               <button
                 onClick={() => scrollTo(item.id)}
-                className={`relative rounded-lg px-3.5 py-2 text-sm font-medium transition-colors ${
-                  active === item.id
+                className={`relative rounded-lg px-3.5 py-2 text-sm font-medium transition-colors ${active === item.id
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
-                }`}
+                  }`}
               >
                 {item.label}
                 {active === item.id ? (
@@ -124,11 +121,10 @@ export function Navbar() {
                 <li key={item.id}>
                   <button
                     onClick={() => scrollTo(item.id)}
-                    className={`w-full rounded-xl px-4 py-3 text-left text-sm font-medium transition-colors ${
-                      active === item.id
+                    className={`w-full rounded-xl px-4 py-3 text-left text-sm font-medium transition-colors ${active === item.id
                         ? "bg-primary/10 text-primary"
                         : "text-foreground hover:bg-muted"
-                    }`}
+                      }`}
                   >
                     {item.label}
                   </button>

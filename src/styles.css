@@ -54,10 +54,13 @@
 :root {
   --radius: 1rem;
 
-  --background: oklch(0.984 0.003 247.858); /* #F8FAFC */
-  --foreground: oklch(0.216 0.031 264.5); /* #111827 */
+  --background: oklch(0.984 0.003 247.858);
+  /* #F8FAFC */
+  --foreground: oklch(0.216 0.031 264.5);
+  /* #111827 */
 
-  --card: oklch(1 0 0); /* white */
+  --card: oklch(1 0 0);
+  /* white */
   --card-foreground: oklch(0.216 0.031 264.5);
 
   --popover: oklch(1 0 0);
@@ -98,21 +101,15 @@
   --sidebar-ring: #FF9933;
 
   /* Custom design tokens */
-  --gradient-primary: linear-gradient(
-    135deg,
-    #FF9933,
-    #E67E22
-  );
-  --gradient-subtle: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 153, 51, 0.07) 100%
-  );
-  --gradient-text: linear-gradient(
-    120deg,
-    #FF9933,
-    #FFB84D
-  );
+  --gradient-primary: linear-gradient(135deg,
+      #FF9933,
+      #E67E22);
+  --gradient-subtle: linear-gradient(180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 153, 51, 0.07) 100%);
+  --gradient-text: linear-gradient(120deg,
+      #FF9933,
+      #FFB84D);
   --shadow-soft:
     0 1px 2px oklch(0.216 0.031 264.5 / 0.04),
     0 8px 24px oklch(0.216 0.031 264.5 / 0.06);
@@ -125,7 +122,8 @@
 }
 
 .dark {
-  --background: oklch(0.19 0.028 264.5); /* deep slate */
+  --background: oklch(0.19 0.028 264.5);
+  /* deep slate */
   --foreground: oklch(0.97 0.005 247.9);
 
   --card: oklch(0.24 0.03 264.5);
@@ -162,11 +160,9 @@
   --sidebar-border: oklch(1 0 0 / 0.09);
   --sidebar-ring: #FF9933;
 
-  --gradient-subtle: linear-gradient(
-    180deg,
-    rgba(30, 27, 38, 0) 0%,
-    rgba(255, 153, 51, 0.12) 100%
-  );
+  --gradient-subtle: linear-gradient(180deg,
+      rgba(30, 27, 38, 0) 0%,
+      rgba(255, 153, 51, 0.12) 100%);
   --shadow-soft: 0 1px 2px oklch(0 0 0 / 0.3), 0 8px 24px oklch(0 0 0 / 0.35);
   --shadow-lift: 0 10px 40px -12px rgba(255, 153, 51, 0.45);
   --shadow-card:
@@ -229,13 +225,16 @@
 
 /* Blob animation */
 @keyframes blob-float {
+
   0%,
   100% {
     transform: translate(0, 0) scale(1);
   }
+
   33% {
     transform: translate(30px, -40px) scale(1.08);
   }
+
   66% {
     transform: translate(-20px, 20px) scale(0.94);
   }
@@ -246,10 +245,12 @@
 }
 
 @keyframes float-slow {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-14px);
   }
@@ -263,14 +264,17 @@
 ::-webkit-scrollbar {
   width: 10px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: color-mix(in oklab, var(--color-primary) 40%, transparent);
   border-radius: 9999px;
   border: 2px solid var(--color-background);
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-primary);
 }
