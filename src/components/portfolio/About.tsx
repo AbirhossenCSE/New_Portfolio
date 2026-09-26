@@ -141,7 +141,7 @@ export function About() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-60px" }}
-              className="grid grid-cols-2 gap-3"
+              className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-1"
             >
               {profile.quickInfo.map((info, i) => {
                 const Icon = infoIcons[i % infoIcons.length];
@@ -149,20 +149,22 @@ export function About() {
                   <motion.div
                     key={info.label}
                     variants={staggerItem}
-                    whileHover={{ y: -3 }}
-                    className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card/60 p-4 shadow-soft backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:shadow-lift"
+                    whileHover={{ x: 4 }}
+                    className="group relative flex items-center gap-3.5 overflow-hidden rounded-2xl border border-border/70 bg-card/60 p-3.5 shadow-soft backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:shadow-lift"
                   >
                     <div className="absolute top-0 right-0 h-16 w-16 -mr-4 -mt-4 rounded-full bg-primary/5 blur-xl group-hover:bg-primary/15 transition-all" />
 
-                    <div className="mb-2.5 grid h-9 w-9 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-soft transition-transform duration-300 group-hover:scale-110">
-                      <Icon className="h-4.5 w-4.5" />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground shadow-soft transition-transform duration-300 group-hover:scale-105">
+                      <Icon className="h-5 w-5" />
                     </div>
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      {info.label}
-                    </p>
-                    <p className="mt-0.5 text-sm font-bold text-foreground truncate">
-                      {info.value}
-                    </p>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                        {info.label}
+                      </p>
+                      <p className="mt-0.5 text-sm font-bold text-foreground leading-snug break-words">
+                        {info.value}
+                      </p>
+                    </div>
                   </motion.div>
                 );
               })}
