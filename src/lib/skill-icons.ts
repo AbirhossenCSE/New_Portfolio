@@ -113,3 +113,65 @@ export function getSkillIcon(iconName?: string, skillName?: string): IconType | 
 
   return Code;
 }
+
+export const SKILL_COLOR_MAP: Record<string, string> = {
+  React: "#61DAFB",
+  "React.js": "#61DAFB",
+  "Next.js": "#38bdf8",
+  TypeScript: "#3178C6",
+  JavaScript: "#F7DF1E",
+  "Node.js": "#339933",
+  Express: "#38bdf8",
+  "Express.js": "#38bdf8",
+  MongoDB: "#47A248",
+  PostgreSQL: "#4169E1",
+  MySQL: "#4479A1",
+  Redis: "#DC382D",
+  Tailwind: "#06B6D4",
+  "Tailwind CSS": "#06B6D4",
+  HTML: "#E34F26",
+  HTML5: "#E34F26",
+  CSS: "#1572B6",
+  CSS3: "#1572B6",
+  Git: "#F05032",
+  GitHub: "#F05032",
+  Docker: "#2496ED",
+  Python: "#3776AB",
+  Figma: "#F24E1E",
+  Vercel: "#38bdf8",
+  AWS: "#FF9900",
+  Firebase: "#FFCA28",
+  GraphQL: "#E10098",
+  Prisma: "#2D3748",
+  "C++": "#00599C",
+  Linux: "#FCC624",
+  Postman: "#FF6C37",
+  Bun: "#FBF0DF",
+  Vite: "#646CFF",
+  Rust: "#DEA584",
+  Go: "#00ADD8",
+  PHP: "#777BB4",
+  Laravel: "#FF2D20",
+  Redux: "#764ABC",
+  Sass: "#CC6699",
+  Bootstrap: "#7952B3",
+  Kubernetes: "#326CE5",
+  Nginx: "#009639",
+  Jest: "#C21325",
+  Cypress: "#69D3A7",
+  FastAPI: "#009688",
+  Django: "#092E20",
+  "Spring Boot": "#6DB33F",
+};
+
+export function getSkillColor(name?: string, icon?: string): string {
+  if (name && SKILL_COLOR_MAP[name]) return SKILL_COLOR_MAP[name];
+  if (icon && SKILL_COLOR_MAP[icon]) return SKILL_COLOR_MAP[icon];
+  if (name) {
+    const lname = name.toLowerCase();
+    for (const [key, color] of Object.entries(SKILL_COLOR_MAP)) {
+      if (lname.includes(key.toLowerCase())) return color;
+    }
+  }
+  return "#38bdf8";
+}

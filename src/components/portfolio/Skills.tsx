@@ -11,7 +11,7 @@ import {
   RefreshCw,
   type LucideIcon,
 } from "lucide-react";
-import { getSkillIcon } from "@/lib/skill-icons";
+import { getSkillIcon, getSkillColor } from "@/lib/skill-icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -38,6 +38,19 @@ const categoryIcons: Record<string, LucideIcon> = {
   Deployment: Cloud,
 };
 
+const categoryDescriptions: Record<string, string> = {
+  Frontend:
+    "I build modern, responsive, and dynamic UIs with React.js. Reusable components & optimized performance.",
+  Backend:
+    "Robust, scalable server architectures, RESTful & GraphQL APIs, and asynchronous microservices.",
+  "Database & ORM":
+    "Efficient data modeling, query optimization, indexing, and seamless database interactions.",
+  Tools:
+    "Modern developer tooling, version control, CI/CD automation, and design-to-code workflows.",
+  Deployment:
+    "Cloud infrastructure, serverless deployments, containerization, and edge performance optimization.",
+};
+
 const categoryOrderList = [
   "Frontend",
   "Backend",
@@ -48,33 +61,35 @@ const categoryOrderList = [
 
 function SkillCard({ skill }: { skill: SkillItem }) {
   const IconComponent = getSkillIcon(skill.icon, skill.name);
+  const brandColor = getSkillColor(skill.name, skill.icon);
 
   return (
     <motion.div
-      whileHover={{ y: -5, scale: 1.02 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border/60 bg-card/80 p-5 backdrop-blur-md shadow-soft transition-all duration-300 hover:border-primary/50 hover:shadow-lift"
+      whileHover={{ y: -4, scale: 1.01 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="group relative flex items-center gap-3.5 overflow-hidden rounded-2xl border border-border/60 bg-card/80 p-4 backdrop-blur-md shadow-soft transition-all duration-300 hover:border-border hover:shadow-lift"
+      style={{
+        borderLeftWidth: "4px",
+        borderLeftColor: brandColor,
+      }}
     >
-      <div className="absolute top-0 right-0 -mt-6 -mr-6 h-24 w-24 rounded-full bg-primary/10 blur-2xl transition-opacity duration-300 opacity-40 group-hover:opacity-100" />
+      {/* Subtle colored glow overlay on left border hover */}
+      <div
+        className="pointer-events-none absolute -left-2 top-0 bottom-0 w-16 opacity-15 transition-opacity duration-300 group-hover:opacity-35 blur-xl"
+        style={{ backgroundColor: brandColor }}
+      />
 
-      <div>
-        <div className="flex items-center gap-3.5">
-          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-soft transition-transform duration-300 group-hover:scale-110">
-            <IconComponent className="h-5 w-5 text-xl" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <h4 className="text-base font-bold tracking-tight text-foreground transition-colors duration-200 group-hover:text-primary truncate">
-              {skill.name}
-            </h4>
-          </div>
-        </div>
-
-        {skill.description && (
-          <p className="mt-3.5 text-xs leading-relaxed text-muted-foreground line-clamp-2">
-            {skill.description}
-          </p>
-        )}
+      {/* Original Brand SVG Icon inside rounded badge */}
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-card border border-border/80 shadow-soft transition-transform duration-300 group-hover:scale-110">
+        <IconComponent
+          className="h-6 w-6 text-xl"
+          style={{ color: brandColor }}
+        />
       </div>
+
+      <h4 className="text-base font-bold tracking-tight text-foreground transition-colors duration-200 group-hover:text-primary truncate">
+        {skill.name}
+      </h4>
     </motion.div>
   );
 }
@@ -157,20 +172,14 @@ export function Skills() {
             </div>
 
             {/* Skeleton Skills Grid */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                 <div
                   key={i}
-                  className="rounded-2xl border border-border bg-card/80 p-5 shadow-soft flex flex-col justify-between"
+                  className="rounded-2xl border border-border bg-card/80 p-4 shadow-soft flex items-center gap-3.5"
                 >
-                  <div className="flex items-center gap-3.5">
-                    <Skeleton className="h-11 w-11 rounded-xl shrink-0" />
-                    <div className="space-y-2 flex-1">
-                      <Skeleton className="h-4 w-24" />
-                      <Skeleton className="h-3 w-16 rounded-full" />
-                    </div>
-                  </div>
-                  <Skeleton className="mt-3.5 h-3 w-full rounded" />
+                  <Skeleton className="h-11 w-11 rounded-2xl shrink-0" />
+                  <Skeleton className="h-4 w-28 rounded" />
                 </div>
               ))}
             </div>
@@ -238,21 +247,31 @@ export function Skills() {
                     className="mt-6 focus-visible:outline-none"
                   >
                     <Reveal>
-                      <div className="mb-6 flex items-center gap-3">
-                        <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-soft">
-                          <Icon className="h-5 w-5" />
+                      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/40 pb-5">
+                        <div className="flex items-start sm:items-center gap-3.5">
+                          <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-400 shadow-soft">
+                            <Icon className="h-6 w-6" />
+                          </div>
+                          <div>
+                            <h3 className="text-xl font-bold text-foreground tracking-tight">
+                              {cat.category}
+                            </h3>
+                            <p className="mt-0.5 text-xs text-muted-foreground max-w-xl leading-relaxed">
+                              {categoryDescriptions[cat.category] ||
+                                "Modern tools and frameworks for high-performance software development."}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="text-lg font-bold text-foreground">
-                            {cat.category}
-                          </h3>
-                          <p className="text-xs text-muted-foreground">
+
+                        <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                          <span className="h-[2px] w-12 bg-blue-500/40 rounded-full hidden md:inline-block" />
+                          <span className="rounded-full border border-blue-500/20 bg-blue-500/10 px-3.5 py-1 text-xs font-semibold text-blue-400">
                             {cat.skills.length} technologies
-                          </p>
+                          </span>
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 sm:gap-5">
                         {cat.skills.map((skill) => (
                           <SkillCard
                             key={skill._id || skill.name}
