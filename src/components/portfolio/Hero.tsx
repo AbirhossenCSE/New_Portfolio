@@ -110,6 +110,15 @@ export function Hero() {
     );
   }
 
+  const projectsDoneText = profile?.stats?.projectsDone || "6+";
+  const yearsExpText = profile?.stats?.yearsExperience || "2+";
+
+  const projectsNum = parseInt(projectsDoneText) || 6;
+  const projectsSuffix = projectsDoneText.replace(/[0-9]/g, "") || "+";
+
+  const yearsNum = parseInt(yearsExpText) || 2;
+  const yearsSuffix = yearsExpText.replace(/[0-9]/g, "") || "+";
+
   return (
     <section
       id="home"
@@ -229,7 +238,7 @@ export function Hero() {
             className="absolute -left-2 sm:left-0 top-6 rounded-2xl glass px-3.5 py-2.5 shadow-soft z-30"
           >
             <p className="text-xl font-extrabold text-foreground">
-              <AnimatedCounter to={6} suffix="+" />
+              <AnimatedCounter to={projectsNum} suffix={projectsSuffix} />
             </p>
             <p className="text-[11px] font-medium text-muted-foreground">Projects Done</p>
           </motion.div>
@@ -240,7 +249,7 @@ export function Hero() {
             className="absolute -right-2 sm:right-0 bottom-6 rounded-2xl glass px-3.5 py-2.5 shadow-soft z-30"
           >
             <p className="text-xl font-extrabold text-foreground">
-              <AnimatedCounter to={2} suffix="+" />
+              <AnimatedCounter to={yearsNum} suffix={yearsSuffix} />
             </p>
             <p className="text-[11px] font-medium text-muted-foreground">Years Experience</p>
           </motion.div>

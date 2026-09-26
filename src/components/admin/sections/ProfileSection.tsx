@@ -51,6 +51,8 @@ export default function ProfileSection() {
     { label: "Experience", value: "" },
     { label: "Focus", value: "" },
   ]);
+  const [profProjectsDone, setProfProjectsDone] = useState("6+");
+  const [profYearsExperience, setProfYearsExperience] = useState("2+");
   const [profileFormSuccess, setProfileFormSuccess] = useState(false);
   const [profileFormError, setProfileFormError] = useState<string | null>(null);
 
@@ -87,6 +89,8 @@ export default function ProfileSection() {
       setProfFacebook(p.socials?.facebook || "");
       setProfAboutParagraphs(p.aboutParagraphs || []);
       setProfAboutTags(p.aboutTags || []);
+      setProfProjectsDone(p.stats?.projectsDone || "6+");
+      setProfYearsExperience(p.stats?.yearsExperience || "2+");
 
       // Re-hydrate quickInfo array labels safely
       const defaultLabels = ["Location", "Education", "Experience", "Focus"];
@@ -192,6 +196,10 @@ export default function ProfileSection() {
       aboutParagraphs: profAboutParagraphs.filter((p) => p.trim() !== ""),
       aboutTags: profAboutTags,
       quickInfo: profQuickInfo,
+      stats: {
+        projectsDone: profProjectsDone,
+        yearsExperience: profYearsExperience,
+      },
     };
 
     profileMutation.mutate(data);
@@ -410,6 +418,41 @@ export default function ProfileSection() {
                   <Input
                     value={profResumeUrl}
                     onChange={(e) => setProfResumeUrl(e.target.value)}
+                    required
+                    className="rounded-xl"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Hero Section Badges & Statistics */}
+            <Card className="border-border bg-card/40 backdrop-blur-md shadow-soft rounded-2xl md:col-span-2">
+              <CardHeader>
+                <CardTitle className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+                  Hero Section Badges & Statistics
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold">
+                    Projects Done Badge (e.g. "6+")
+                  </label>
+                  <Input
+                    value={profProjectsDone}
+                    onChange={(e) => setProfProjectsDone(e.target.value)}
+                    placeholder="6+"
+                    required
+                    className="rounded-xl"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold">
+                    Years Experience Badge (e.g. "2+")
+                  </label>
+                  <Input
+                    value={profYearsExperience}
+                    onChange={(e) => setProfYearsExperience(e.target.value)}
+                    placeholder="2+"
                     required
                     className="rounded-xl"
                   />

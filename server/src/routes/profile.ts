@@ -47,6 +47,7 @@ router.put(
       aboutParagraphs,
       aboutTags,
       quickInfo,
+      stats,
     } = req.body;
 
     if (
@@ -96,6 +97,7 @@ router.put(
           aboutParagraphs,
           aboutTags,
           quickInfo,
+          stats,
         },
         { new: true, upsert: true, runValidators: true },
       );

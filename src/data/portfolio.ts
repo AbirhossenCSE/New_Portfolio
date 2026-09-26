@@ -27,6 +27,10 @@ export const profile = {
     linkedin: "https://www.linkedin.com/in/abir-hossen-cse/",
     facebook: "https://www.facebook.com/abir.mondol.503",
   },
+  stats: {
+    projectsDone: "6+",
+    yearsExperience: "2+",
+  },
 };
 
 export const aboutParagraphs = [

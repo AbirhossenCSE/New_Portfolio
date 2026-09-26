@@ -207,6 +207,7 @@ const seed = async () => {
         aboutParagraphs,
         aboutTags,
         quickInfo,
+        stats: profile.stats,
       };
       await Profile.create(profileToInsert);
       profileCreated = true;

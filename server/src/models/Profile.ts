@@ -11,6 +11,11 @@ interface IQuickInfo {
   value: string;
 }
 
+interface IStats {
+  projectsDone: string;
+  yearsExperience: string;
+}
+
 export interface IProfile extends Document {
   name: string;
   fullName: string;
@@ -29,6 +34,7 @@ export interface IProfile extends Document {
   aboutParagraphs: string[];
   aboutTags: string[];
   quickInfo: IQuickInfo[];
+  stats?: IStats;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -131,6 +137,10 @@ const profileSchema = new Schema<IProfile>(
     quickInfo: {
       type: [quickInfoSchema],
       required: true,
+    },
+    stats: {
+      projectsDone: { type: String, default: "6+" },
+      yearsExperience: { type: String, default: "2+" },
     },
   },
   {

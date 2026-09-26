@@ -26,6 +26,10 @@ export interface IProfile {
     label: string;
     value: string;
   }[];
+  stats?: {
+    projectsDone: string;
+    yearsExperience: string;
+  };
 }
 
 const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";

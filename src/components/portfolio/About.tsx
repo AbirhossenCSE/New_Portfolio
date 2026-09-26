@@ -134,41 +134,6 @@ export function About() {
                 </div>
               </div>
             </Reveal>
-
-            {/* Quick Info Grid */}
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-60px" }}
-              className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-1"
-            >
-              {profile.quickInfo.map((info, i) => {
-                const Icon = infoIcons[i % infoIcons.length];
-                return (
-                  <motion.div
-                    key={info.label}
-                    variants={staggerItem}
-                    whileHover={{ x: 4 }}
-                    className="group relative flex items-center gap-3.5 overflow-hidden rounded-2xl border border-border/70 bg-card/60 p-3.5 shadow-soft backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:shadow-lift"
-                  >
-                    <div className="absolute top-0 right-0 h-16 w-16 -mr-4 -mt-4 rounded-full bg-primary/5 blur-xl group-hover:bg-primary/15 transition-all" />
-
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground shadow-soft transition-transform duration-300 group-hover:scale-105">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                        {info.label}
-                      </p>
-                      <p className="mt-0.5 text-sm font-bold text-foreground leading-snug break-words">
-                        {info.value}
-                      </p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
           </div>
 
           {/* Right Column: Bio Paragraphs, Highlights & Tags */}
@@ -259,6 +224,41 @@ export function About() {
             )}
           </div>
         </div>
+
+        {/* Quick Info Cards Bar (All 4 side-by-side in 1 row below section) */}
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+          className="mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        >
+          {profile.quickInfo.map((info, i) => {
+            const Icon = infoIcons[i % infoIcons.length];
+            return (
+              <motion.div
+                key={info.label}
+                variants={staggerItem}
+                whileHover={{ y: -4 }}
+                className="group relative flex items-center gap-3.5 overflow-hidden rounded-2xl border border-border/70 bg-card/60 p-4 shadow-soft backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:shadow-lift"
+              >
+                <div className="absolute top-0 right-0 h-16 w-16 -mr-4 -mt-4 rounded-full bg-primary/5 blur-xl group-hover:bg-primary/15 transition-all" />
+
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground shadow-soft transition-transform duration-300 group-hover:scale-105">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    {info.label}
+                  </p>
+                  <p className="mt-0.5 text-xs sm:text-sm font-bold text-foreground leading-snug break-words">
+                    {info.value}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
       </div>
     </section>
   );

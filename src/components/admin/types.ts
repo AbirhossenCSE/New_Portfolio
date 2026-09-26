@@ -77,4 +77,8 @@ export interface ProfileItem {
     label: string;
     value: string;
   }[];
+  stats?: {
+    projectsDone: string;
+    yearsExperience: string;
+  };
 }
