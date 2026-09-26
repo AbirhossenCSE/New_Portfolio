@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { profile as staticProfile } from "@/data/portfolio";
 
 export interface IProfile {
   name: string;
@@ -30,7 +31,7 @@ export interface IProfile {
 const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export function useProfile() {
-  return useQuery<IProfile>({
+  const query = useQuery<IProfile>({
     queryKey: ["profile"],
     queryFn: async () => {
       const res = await fetch(`${apiUrl}/api/profile`);
@@ -41,4 +42,13 @@ export function useProfile() {
     },
     staleTime: 5 * 60 * 1000, // 5 minutes cache stale
   });
+
+  const profile = query.data || staticProfile;
+  const resumeUrl = profile.resumeUrl || staticProfile.resumeUrl;
+
+  return {
+    ...query,
+    profile,
+    resumeUrl,
+  };
 }

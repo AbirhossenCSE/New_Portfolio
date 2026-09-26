@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Moon, Sun, X } from "lucide-react";
-import { navItems, profile as staticProfile } from "@/data/portfolio";
+import { navItems } from "@/data/portfolio";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useProfile } from "@/hooks/useProfile";
 import { useTheme } from "@/hooks/useTheme";
@@ -13,9 +13,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const active = useActiveSection(ids);
   const { theme, toggle } = useTheme();
-  const { data: profileData } = useProfile();
-
-  const resumeUrl = profileData?.resumeUrl || staticProfile.resumeUrl;
+  const { resumeUrl } = useProfile();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
