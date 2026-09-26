@@ -1,13 +1,16 @@
 import { ArrowUp, Facebook, Github, Linkedin } from "lucide-react";
-import { navItems, profile } from "@/data/portfolio";
-
-const socials = [
-  { icon: Github, href: profile.socials.github, label: "GitHub" },
-  { icon: Linkedin, href: profile.socials.linkedin, label: "LinkedIn" },
-  { icon: Facebook, href: profile.socials.facebook, label: "Facebook" },
-];
+import { navItems } from "@/data/portfolio";
+import { useProfile } from "@/hooks/useProfile";
 
 export function Footer() {
+  const { profile } = useProfile();
+
+  const socials = [
+    { icon: Github, href: profile.socials.github, label: "GitHub" },
+    { icon: Linkedin, href: profile.socials.linkedin, label: "LinkedIn" },
+    { icon: Facebook, href: profile.socials.facebook, label: "Facebook" },
+  ];
+
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -18,11 +21,13 @@ export function Footer() {
           <div className="max-w-sm text-center md:text-left">
             <button
               onClick={() => scrollTo("home")}
-              className="inline-flex items-center gap-2 text-xl font-extrabold tracking-tight"
+              className="inline-flex items-center gap-2.5 text-xl font-extrabold tracking-tight cursor-pointer"
             >
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-primary text-sm font-black text-primary-foreground">
-                AH
-              </span>
+              <img
+                src={profile.homeImage}
+                alt={profile.name}
+                className="h-9 w-9 rounded-xl object-cover object-[50%_15%] border border-primary/30 shadow-soft shrink-0"
+              />
               Abir Hossen
             </button>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">

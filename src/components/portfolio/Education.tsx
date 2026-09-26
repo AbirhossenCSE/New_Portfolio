@@ -6,7 +6,6 @@ import {
   RefreshCw,
   Building2,
   Calendar,
-  CheckCircle2,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Reveal } from "@/components/motion/Reveal";
@@ -131,21 +130,6 @@ const EducationTimelineItem = memo(function EducationTimelineItem({
                   </li>
                 ))}
               </ul>
-
-              <div className="pt-2 flex flex-wrap gap-1.5 sm:gap-2 border-t border-border/30">
-                <Badge
-                  variant="secondary"
-                  className="text-[10px] sm:text-[11px] font-medium bg-secondary/50"
-                >
-                  <CheckCircle2 className="w-3 h-3 mr-1 text-primary inline-block" /> Academic Excellence
-                </Badge>
-                <Badge
-                  variant="secondary"
-                  className="text-[10px] sm:text-[11px] font-medium bg-secondary/50"
-                >
-                  <CheckCircle2 className="w-3 h-3 mr-1 text-primary inline-block" /> Computer Science & Engineering
-                </Badge>
-              </div>
             </div>
           )}
         </div>

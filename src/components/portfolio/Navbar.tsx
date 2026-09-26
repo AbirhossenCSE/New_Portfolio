@@ -13,7 +13,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const active = useActiveSection(ids);
   const { theme, toggle } = useTheme();
-  const { resumeUrl } = useProfile();
+  const { profile, resumeUrl } = useProfile();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -30,23 +30,27 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "py-2.5" : "py-4"
-        }`}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? "py-2.5" : "py-4"
+      }`}
     >
       <nav
-        className={`mx-4 sm:mx-6 xl:mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-2xl px-4 transition-all duration-300 sm:px-6 ${scrolled
+        className={`mx-4 sm:mx-6 xl:mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-2xl px-4 transition-all duration-300 sm:px-6 ${
+          scrolled
             ? "glass py-2.5 shadow-soft"
             : "border border-transparent bg-transparent py-3"
-          }`}
+        }`}
       >
         <button
           onClick={() => scrollTo("home")}
-          className="flex shrink-0 items-center gap-2 text-lg font-extrabold tracking-tight"
+          className="flex shrink-0 items-center gap-2.5 text-lg font-extrabold tracking-tight cursor-pointer"
           aria-label="Go to top"
         >
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-primary text-sm font-black text-primary-foreground">
-            AH
-          </span>
+          <img
+            src={profile.homeImage}
+            alt={profile.name}
+            className="h-9 w-9 rounded-xl object-cover object-[50%_15%] border border-primary/30 shadow-soft shrink-0"
+          />
           <span className="hidden sm:inline">
             Abir<span className="text-primary">.</span>
           </span>
